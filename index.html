@@ -10,50 +10,61 @@
     * { font-family: 'Inter', sans-serif; }
     body { background: #030712; }
 
-    .glass {
-      background: rgba(17,24,39,0.75);
-      border: 1px solid rgba(255,255,255,0.07);
-      backdrop-filter: blur(12px);
-    }
+    .glass { background: rgba(17,24,39,0.85); border: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(12px); }
 
     /* Animations */
     .pulse-dot { animation: pulseDot 1.8s ease-in-out infinite; }
-    @keyframes pulseDot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:0.6} }
-
+    @keyframes pulseDot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
     .alert-ring { animation: alertRing 2.2s ease-in-out infinite; }
-    @keyframes alertRing {
-      0%,100%{border-color:rgba(249,115,22,.35);box-shadow:0 0 0 0 rgba(249,115,22,0)}
-      50%{border-color:rgba(249,115,22,.9);box-shadow:0 0 12px rgba(249,115,22,.3)}
-    }
-
-    .fade-up { animation: fadeUp 0.6s ease-out both; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-
+    @keyframes alertRing { 0%,100%{border-color:rgba(249,115,22,.35)} 50%{border-color:rgba(249,115,22,.9);box-shadow:0 0 12px rgba(249,115,22,.3)} }
+    .fade-up { animation: fadeUp 0.55s ease-out both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
     .score-glow { text-shadow: 0 0 40px rgba(99,102,241,.9), 0 0 80px rgba(99,102,241,.4); }
-
-    .bar-grow { animation: barGrow 1.4s cubic-bezier(.22,1,.36,1) both; transform-origin:left; }
+    .bar-grow { animation: barGrow 1.3s cubic-bezier(.22,1,.36,1) both; transform-origin:left; }
     @keyframes barGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
 
-    /* Tabs */
-    .tab-btn {
-      display:flex; align-items:center; gap:8px;
-      padding: 10px 18px; border-radius: 12px;
-      border: 1px solid transparent;
-      color: #6B7280; font-size: 13px; font-weight: 500;
-      cursor:pointer; transition: all 0.2s ease; white-space:nowrap;
+    /* Top nav tabs */
+    .nav-tab {
+      display:flex; align-items:center; gap:6px;
+      padding:8px 14px; border-radius:8px;
+      color:#6B7280; font-size:13px; font-weight:500;
+      cursor:pointer; transition:all .18s; white-space:nowrap;
+      border-bottom:2px solid transparent;
     }
-    .tab-btn:hover { color:#D1D5DB; background:rgba(255,255,255,.04); }
-    .tab-btn.active {
-      color:#A5B4FC;
-      background:rgba(99,102,241,.18);
-      border-color:rgba(99,102,241,.45);
-    }
+    .nav-tab:hover { color:#D1D5DB; background:rgba(255,255,255,.04); }
+    .nav-tab.active { color:#A5B4FC; background:rgba(99,102,241,.15); border-bottom-color:#6366F1; }
+
+    /* Tab content */
     .tab-content { display:none; }
     .tab-content.active { display:block; }
 
+    /* Filter selects */
+    .filter-select {
+      background: rgba(17,24,39,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #D1D5DB; border-radius:8px;
+      padding: 7px 30px 7px 10px; font-size:12px;
+      appearance:none; cursor:pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 7px center; background-size:13px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .filter-select:hover { border-color:rgba(99,102,241,.5); }
+    .filter-select:focus { outline:none; border-color:rgba(99,102,241,.7); box-shadow:0 0 0 2px rgba(99,102,241,.2); }
+    .filter-select option { background:#111827; color:#D1D5DB; }
+
+    /* Filter chip */
+    .filter-chip {
+      display:inline-flex; align-items:center; gap:5px;
+      background:rgba(99,102,241,.2); border:1px solid rgba(99,102,241,.4);
+      color:#A5B4FC; font-size:11px; padding:3px 8px; border-radius:20px;
+    }
+    .filter-chip button { color:#818CF8; line-height:1; font-size:13px; cursor:pointer; }
+    .filter-chip button:hover { color:#EF4444; }
+
     /* Search */
-    .search-wrap { transition: box-shadow .25s, border-color .25s; }
-    .search-wrap:focus-within { box-shadow:0 0 0 3px rgba(99,102,241,.3); border-color:rgba(99,102,241,.6); }
+    .search-wrap { transition:box-shadow .25s,border-color .25s; }
+    .search-wrap:focus-within { box-shadow:0 0 0 2px rgba(99,102,241,.3); border-color:rgba(99,102,241,.6); }
 
     .suggestion-pill { transition:background .15s; cursor:pointer; }
     .suggestion-pill:hover { background:rgba(99,102,241,.2); }
@@ -61,315 +72,317 @@
     /* Components */
     .kw-tag { transition:transform .18s,box-shadow .18s; cursor:default; }
     .kw-tag:hover { transform:scale(1.07); }
-
     .treemap-cell { transition:opacity .18s,filter .18s; cursor:pointer; }
     .treemap-cell:hover { opacity:.8; filter:brightness(1.2); }
-
     .emotion-card { transition:transform .2s,box-shadow .2s; }
     .emotion-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.4); }
-
-    .verbatim-item { transition:background .15s; }
+    .verbatim-item { transition:background .15s; border-radius:12px; }
     .verbatim-item:hover { background:rgba(255,255,255,.03); }
-
-    .filter-btn { transition:all .15s; cursor:pointer; }
-    .filter-btn.active { background:rgba(99,102,241,.25); border-color:rgba(99,102,241,.55); color:#a5b4fc; }
-
+    .vfilter-btn { transition:all .15s; cursor:pointer; }
+    .vfilter-btn.active { background:rgba(99,102,241,.25); border-color:rgba(99,102,241,.55); color:#a5b4fc; }
     .action-card { transition:transform .2s; }
     .action-card:hover { transform:translateX(4px); }
+
+    /* Dept heatmap row highlight */
+    .dept-row { transition:background .3s; border-radius:8px; padding:2px 6px; }
+    .dept-row.highlighted { background:rgba(99,102,241,.15); }
+
+    /* Update flash */
+    #updateFlash { transition:opacity .3s; }
   </style>
 </head>
-<body class="min-h-screen p-4 lg:p-5 space-y-3">
+<body class="min-h-screen" style="padding:12px 16px; display:flex; flex-direction:column; gap:10px;">
 
-  <!-- ══════ HEADER (always visible) ══════ -->
-  <div class="glass rounded-2xl px-5 py-4 flex flex-wrap items-center justify-between gap-4 fade-up" style="animation-delay:0s">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <!-- ════════════════════════════════
+       TOP NAV: Logo + Tabs + Status
+  ════════════════════════════════ -->
+  <nav class="glass rounded-2xl px-4 py-3 flex items-center gap-3" style="position:sticky;top:12px;z-index:50">
+    <!-- Brand -->
+    <div class="flex items-center gap-2.5 flex-shrink-0">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
         </svg>
       </div>
       <div>
-        <div class="text-white font-extrabold text-xl leading-none tracking-tight">PulseAI</div>
-        <div class="text-gray-500 text-xs mt-0.5">Employee Sentiment Intelligence</div>
+        <div class="text-white font-extrabold text-base leading-none tracking-tight">PulseAI</div>
+        <div class="text-gray-600 text-xs">Employee Intelligence</div>
       </div>
     </div>
 
-    <div class="text-center">
-      <div class="text-6xl font-black score-glow text-indigo-400 leading-none">72</div>
-      <div class="text-gray-400 text-xs font-medium mt-1">Company NPS Score</div>
-      <div class="text-emerald-500 text-xs font-semibold">▲ +10 vs last cycle</div>
-    </div>
+    <div class="w-px h-6 bg-gray-800 flex-shrink-0"></div>
 
-    <div class="flex gap-5 sm:gap-8">
-      <div class="text-center">
-        <div class="text-white font-bold text-xl">847</div>
-        <div class="text-gray-500 text-xs">Responses</div>
-      </div>
-      <div class="text-center">
-        <div class="text-white font-bold text-xl">91%</div>
-        <div class="text-gray-500 text-xs">Response Rate</div>
-      </div>
-      <div class="text-center">
-        <div class="text-white font-bold text-xl">8</div>
-        <div class="text-gray-500 text-xs">Departments</div>
-      </div>
-      <div class="text-center">
-        <div class="flex items-center justify-center gap-1">
-          <div class="w-2 h-2 rounded-full bg-orange-500 pulse-dot"></div>
-          <div class="text-orange-400 font-bold text-xl">2</div>
-        </div>
-        <div class="text-gray-500 text-xs">Risk Alerts</div>
-      </div>
-    </div>
-
-    <div class="text-right">
-      <div class="text-gray-300 text-sm font-semibold">Nov 2024 – Apr 2025</div>
-      <div class="text-gray-500 text-xs">Survey Period</div>
-      <div class="mt-1 inline-flex items-center gap-1.5 bg-emerald-900/40 text-emerald-400 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30">
-        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></div>
-        Live · Updated 2h ago
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════ TAB NAV ══════ -->
-  <div class="glass rounded-2xl px-4 py-2.5 fade-up" style="animation-delay:0.05s">
-    <div class="flex items-center gap-1 overflow-x-auto">
-      <!-- Tab 1 -->
-      <button class="tab-btn active" data-tab="tab-overview">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-        </svg>
+    <!-- Tabs -->
+    <div class="flex items-center gap-1 flex-1 overflow-x-auto">
+      <button class="nav-tab active" data-tab="tab-overview">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
         Overview
       </button>
-      <!-- Tab 2 -->
-      <button class="tab-btn" data-tab="tab-emotions">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
+      <button class="nav-tab" data-tab="tab-emotions">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         360° Emotions
-        <span class="text-xs bg-purple-800/60 text-purple-300 px-1.5 py-0.5 rounded-md">AI</span>
+        <span class="text-xs bg-purple-900/60 text-purple-300 px-1.5 py-0.5 rounded-md border border-purple-700/40">AI</span>
       </button>
-      <!-- Tab 3 -->
-      <button class="tab-btn" data-tab="tab-topics">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
-        </svg>
+      <button class="nav-tab" data-tab="tab-topics">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
         Topic Explorer
       </button>
-      <!-- Tab 4 -->
-      <button class="tab-btn" data-tab="tab-correlation">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-        </svg>
+      <button class="nav-tab" data-tab="tab-correlation">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
         Correlation
       </button>
-      <!-- Tab 5 -->
-      <button class="tab-btn" data-tab="tab-actions">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
+      <button class="nav-tab" data-tab="tab-actions">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         Action Plan
-        <span class="text-xs bg-red-800/60 text-red-300 px-1.5 py-0.5 rounded-md">3 Tasks</span>
+        <span class="text-xs bg-red-900/60 text-red-300 px-1.5 py-0.5 rounded-md border border-red-700/40">3</span>
       </button>
+    </div>
 
-      <div class="ml-auto flex-shrink-0">
-        <div class="text-gray-600 text-xs px-2">5 modules</div>
+    <!-- Status -->
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <span id="updateFlash" class="text-xs text-emerald-400 hidden"></span>
+      <div class="inline-flex items-center gap-1.5 bg-emerald-900/30 text-emerald-400 text-xs px-2.5 py-1.5 rounded-lg border border-emerald-500/30">
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></div>
+        Live
       </div>
     </div>
-  </div>
+  </nav>
 
-  <!-- ══════ SEMANTIC SEARCH (always visible) ══════ -->
-  <div class="glass rounded-2xl px-5 py-3 fade-up" style="animation-delay:0.08s">
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-        <span class="text-indigo-400 text-xs font-semibold uppercase tracking-wider">Semantic Search</span>
+  <!-- ════════════════════════════════
+       FILTER BAR
+  ════════════════════════════════ -->
+  <div class="glass rounded-2xl px-4 py-3 space-y-2.5">
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Icon -->
+      <div class="flex items-center gap-1.5 text-gray-500 flex-shrink-0">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+        <span class="text-xs font-semibold uppercase tracking-wide">Filters</span>
       </div>
-      <div class="relative flex-1 search-wrap rounded-xl border border-gray-700/60 bg-gray-900/60">
-        <input id="semanticSearch" type="text"
-          placeholder='Search by meaning... e.g. "พนักงานรู้สึกหมดไฟ" or "want better benefits"'
-          class="w-full bg-transparent text-gray-200 text-sm px-4 py-2.5 outline-none placeholder-gray-600 rounded-xl" autocomplete="off"/>
+
+      <!-- Department -->
+      <div class="flex items-center gap-1.5">
+        <label class="text-gray-500 text-xs whitespace-nowrap">🏢 Department</label>
+        <select id="deptFilter" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Departments</option>
+          <option value="engineering">Engineering</option>
+          <option value="product">Product</option>
+          <option value="marketing">Marketing</option>
+          <option value="sales">Sales</option>
+          <option value="hr">HR</option>
+          <option value="finance">Finance</option>
+          <option value="customer-support">Customer Support</option>
+          <option value="legal">Legal</option>
+        </select>
+      </div>
+
+      <!-- Date Range -->
+      <div class="flex items-center gap-1.5">
+        <label class="text-gray-500 text-xs whitespace-nowrap">📅 Date Range</label>
+        <select id="dateFilter" class="filter-select" onchange="applyFilters()">
+          <option value="6m" selected>Last 6 months</option>
+          <option value="3m">Last 3 months</option>
+          <option value="1m">Last 30 days</option>
+          <option value="1y">Last 12 months</option>
+          <option value="custom">Custom Range</option>
+        </select>
+      </div>
+
+      <!-- Survey Cycle -->
+      <div class="flex items-center gap-1.5">
+        <label class="text-gray-500 text-xs whitespace-nowrap">🔄 Cycle</label>
+        <select id="cycleFilter" class="filter-select" onchange="applyFilters()">
+          <option value="current">Nov 2024 – Apr 2025</option>
+          <option value="prev">May 2024 – Oct 2024</option>
+          <option value="all">All Cycles</option>
+        </select>
+      </div>
+
+      <!-- Response type -->
+      <div class="flex items-center gap-1.5">
+        <label class="text-gray-500 text-xs whitespace-nowrap">📋 Response Type</label>
+        <select id="typeFilter" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Responses</option>
+          <option value="open">Open-ended Only</option>
+          <option value="rating">Rating Scale Only</option>
+        </select>
+      </div>
+
+      <!-- Comparison toggle -->
+      <div class="flex items-center gap-1.5">
+        <label class="text-gray-500 text-xs whitespace-nowrap">⚖️ Compare vs</label>
+        <select id="compareFilter" class="filter-select" onchange="applyFilters()">
+          <option value="none">No Comparison</option>
+          <option value="prev-cycle">Previous Cycle</option>
+          <option value="prev-year">Same Period Last Year</option>
+          <option value="benchmark">Industry Benchmark</option>
+        </select>
+      </div>
+
+      <!-- Search -->
+      <div class="flex-1 min-w-48 relative search-wrap rounded-lg border border-gray-700/60 bg-gray-900/60">
+        <div class="flex items-center px-3">
+          <svg class="w-3.5 h-3.5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input id="semanticSearch" type="text" placeholder='Semantic search... e.g. "หมดไฟ" or "better benefits"'
+            class="w-full bg-transparent text-gray-200 text-xs px-2 py-2 outline-none placeholder-gray-600" autocomplete="off"/>
+        </div>
         <div id="searchDropdown" class="hidden absolute z-30 top-full mt-1 left-0 right-0 glass rounded-xl border border-gray-700/50 p-2 shadow-2xl">
-          <div class="text-gray-500 text-xs px-2 mb-2 font-semibold uppercase tracking-wide">Suggested Searches</div>
-          <div class="space-y-1">
-            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2"><span class="text-red-400">●</span> พนักงานรู้สึกหมดไฟจากงานหนัก</div>
-            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2"><span class="text-amber-400">●</span> ต้องการความก้าวหน้าในสายอาชีพ</div>
-            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2"><span class="text-emerald-400">●</span> ความพึงพอใจต่อวัฒนธรรมองค์กร</div>
-            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2"><span class="text-indigo-400">●</span> Employees unhappy with compensation and benefits</div>
-            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2"><span class="text-cyan-400">●</span> Remote work flexibility requests</div>
+          <div class="text-gray-500 text-xs px-2 mb-1.5 font-semibold">Suggestions</div>
+          <div class="space-y-0.5">
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-xs flex items-center gap-2"><span class="text-red-400">●</span>พนักงานรู้สึกหมดไฟจากงานหนัก</div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-xs flex items-center gap-2"><span class="text-amber-400">●</span>ต้องการความก้าวหน้าในสายอาชีพ</div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-xs flex items-center gap-2"><span class="text-emerald-400">●</span>ความพึงพอใจต่อวัฒนธรรมองค์กร</div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-xs flex items-center gap-2"><span class="text-indigo-400">●</span>Employees unhappy with compensation</div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-xs flex items-center gap-2"><span class="text-cyan-400">●</span>Remote work flexibility requests</div>
           </div>
-          <div class="mt-2 pt-2 border-t border-gray-800 text-gray-600 text-xs px-2">
-            AI matches responses by semantic meaning, not exact keywords
-          </div>
+          <div class="mt-1.5 pt-1.5 border-t border-gray-800 text-gray-600 text-xs px-2">Searches by meaning, not exact keyword</div>
         </div>
       </div>
-      <div class="flex gap-2 flex-shrink-0">
-        <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1.5 rounded-lg border border-gray-700/50">847 responses indexed</span>
-        <span class="text-xs bg-indigo-900/50 text-indigo-300 px-2.5 py-1.5 rounded-lg border border-indigo-700/40">Vector DB</span>
-      </div>
+
+      <!-- Reset -->
+      <button onclick="resetFilters()" class="text-xs text-gray-500 hover:text-gray-300 px-3 py-2 rounded-lg border border-gray-800 hover:border-gray-600 transition-all flex-shrink-0">Reset</button>
     </div>
+
+    <!-- Active filter chips -->
+    <div id="activeFilters" class="flex flex-wrap gap-1.5 empty:hidden"></div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════
        TAB 1 — OVERVIEW
-  ══════════════════════════════════════════════ -->
-  <div id="tab-overview" class="tab-content active space-y-4">
+  ════════════════════════════════════════════════ -->
+  <div id="tab-overview" class="tab-content active space-y-3">
+
+    <!-- NPS Hero + KPIs (ONLY in Overview) -->
+    <div class="glass rounded-2xl px-5 py-4 flex flex-wrap items-center justify-between gap-4 fade-up">
+      <div class="text-center">
+        <div class="text-6xl font-black score-glow text-indigo-400 leading-none">72</div>
+        <div class="text-gray-400 text-xs font-medium mt-1">Company NPS Score</div>
+        <div class="text-emerald-500 text-xs font-semibold">▲ +10 vs last cycle</div>
+      </div>
+      <div class="flex gap-6 sm:gap-10 flex-wrap">
+        <div class="text-center"><div class="text-white font-bold text-2xl">847</div><div class="text-gray-500 text-xs">Responses</div></div>
+        <div class="text-center"><div class="text-white font-bold text-2xl">91%</div><div class="text-gray-500 text-xs">Response Rate</div></div>
+        <div class="text-center"><div class="text-white font-bold text-2xl">8</div><div class="text-gray-500 text-xs">Departments</div></div>
+        <div class="text-center">
+          <div class="flex items-center justify-center gap-1"><div class="w-2 h-2 rounded-full bg-orange-500 pulse-dot"></div><div class="text-orange-400 font-bold text-2xl">2</div></div>
+          <div class="text-gray-500 text-xs">Risk Alerts</div>
+        </div>
+        <div class="text-center"><div class="text-white font-bold text-2xl">58%</div><div class="text-gray-500 text-xs">Positive</div></div>
+        <div class="text-center"><div class="text-white font-bold text-2xl">27%</div><div class="text-gray-500 text-xs">Neutral</div></div>
+        <div class="text-center"><div class="text-red-400 font-bold text-2xl">15%</div><div class="text-gray-500 text-xs">Negative</div></div>
+      </div>
+      <div class="text-right text-xs text-gray-500">
+        <div class="text-gray-300 text-sm font-semibold">Nov 2024 – Apr 2025</div>
+        <span id="overviewFilterLabel"></span>
+      </div>
+    </div>
 
     <!-- Row 1: 3 cols -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
       <!-- Sentiment Donut -->
-      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.12s">
+      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:.06s">
         <div class="flex items-center justify-between mb-3">
-          <div>
-            <div class="text-white font-semibold text-sm">Sentiment Distribution</div>
-            <div class="text-gray-500 text-xs">AI Sentiment Analysis · 847 responses</div>
-          </div>
+          <div><div class="text-white font-semibold text-sm">Sentiment Distribution</div><div class="text-gray-500 text-xs" id="sentimentSubtitle">Overall · 847 responses</div></div>
           <span class="text-xs bg-indigo-900/60 text-indigo-300 px-2 py-1 rounded-lg border border-indigo-700/40">AI Scored</span>
         </div>
-        <!-- r=80, circ=502.65 | Pos58%=291.54 | Neu27%=135.72 | Neg15%=75.40 -->
-        <div class="flex justify-center my-2">
-          <svg viewBox="0 0 220 220" class="w-44 h-44">
-            <defs>
-              <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
+        <div class="flex justify-center my-1">
+          <svg viewBox="0 0 220 220" class="w-40 h-40">
+            <defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
             <circle cx="110" cy="110" r="80" fill="none" stroke="#111827" stroke-width="30"/>
             <circle cx="110" cy="110" r="80" fill="none" stroke="#EF4444" stroke-width="30" stroke-dasharray="75.40 427.25" transform="rotate(216 110 110)" stroke-linecap="round"/>
             <circle cx="110" cy="110" r="80" fill="none" stroke="#F59E0B" stroke-width="30" stroke-dasharray="135.72 366.93" transform="rotate(118.8 110 110)" stroke-linecap="round"/>
             <circle cx="110" cy="110" r="80" fill="none" stroke="#10B981" stroke-width="30" stroke-dasharray="291.54 211.11" transform="rotate(-90 110 110)" stroke-linecap="round" filter="url(#glow)"/>
             <text x="110" y="105" text-anchor="middle" fill="white" font-size="30" font-weight="800" font-family="Inter">72</text>
-            <text x="110" y="122" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="Inter">NPS Score</text>
+            <text x="110" y="122" text-anchor="middle" fill="#6B7280" font-size="10" font-family="Inter">NPS Score</text>
           </svg>
         </div>
-        <div class="space-y-3 mt-1">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div><span class="text-gray-300 text-sm">Positive</span></div>
-            <div class="flex items-center gap-2">
-              <div class="h-1.5 bg-emerald-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-emerald-500 rounded-full bar-grow" style="width:58%"></div></div>
-              <span class="text-emerald-400 font-bold text-sm w-8 text-right">58%</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div><span class="text-gray-300 text-sm">Neutral</span></div>
-            <div class="flex items-center gap-2">
-              <div class="h-1.5 bg-amber-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-amber-500 rounded-full bar-grow" style="width:27%"></div></div>
-              <span class="text-amber-400 font-bold text-sm w-8 text-right">27%</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><span class="text-gray-300 text-sm">Negative</span></div>
-            <div class="flex items-center gap-2">
-              <div class="h-1.5 bg-red-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-red-500 rounded-full bar-grow" style="width:15%"></div></div>
-              <span class="text-red-400 font-bold text-sm w-8 text-right">15%</span>
-            </div>
-          </div>
+        <div class="space-y-2.5 mt-1">
+          <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div><span class="text-gray-300 text-sm">Positive</span></div><div class="flex items-center gap-2"><div class="h-1.5 bg-emerald-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-emerald-500 rounded-full bar-grow" style="width:58%"></div></div><span class="text-emerald-400 font-bold text-sm w-8 text-right">58%</span></div></div>
+          <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div><span class="text-gray-300 text-sm">Neutral</span></div><div class="flex items-center gap-2"><div class="h-1.5 bg-amber-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-amber-500 rounded-full bar-grow" style="width:27%"></div></div><span class="text-amber-400 font-bold text-sm w-8 text-right">27%</span></div></div>
+          <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><span class="text-gray-300 text-sm">Negative</span></div><div class="flex items-center gap-2"><div class="h-1.5 bg-red-900/40 rounded-full w-24 overflow-hidden"><div class="h-full bg-red-500 rounded-full bar-grow" style="width:15%"></div></div><span class="text-red-400 font-bold text-sm w-8 text-right">15%</span></div></div>
         </div>
       </div>
 
       <!-- Department Heatmap -->
-      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.16s">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">Sentiment Heatmap</div>
-            <div class="text-gray-500 text-xs">By Department · Positive Score %</div>
-          </div>
+      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:.10s">
+        <div class="flex items-center justify-between mb-3">
+          <div><div class="text-white font-semibold text-sm">Sentiment Heatmap</div><div class="text-gray-500 text-xs">By Department · Positive %</div></div>
           <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-lg border border-purple-700/40">8 Depts</span>
         </div>
-        <div class="space-y-2.5">
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Engineering</span><span class="text-emerald-400 font-semibold">81%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:81%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Legal</span><span class="text-emerald-400 font-semibold">78%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:78%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Product</span><span class="text-emerald-400 font-semibold">74%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:74%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Marketing</span><span class="text-emerald-400 font-semibold">71%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:71%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Sales</span><span class="text-amber-400 font-semibold">68%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-amber-600 to-amber-400" style="width:68%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">HR</span><span class="text-amber-400 font-semibold">59%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-amber-600 to-amber-400" style="width:59%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><div class="flex items-center gap-1.5"><span class="text-gray-300">Finance</span><span class="text-orange-400 font-bold">⚠</span></div><span class="text-orange-400 font-semibold">55%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-orange-600 to-orange-400" style="width:55%"></div></div></div>
-          <div><div class="flex justify-between text-xs mb-1"><div class="flex items-center gap-1.5"><span class="text-gray-300">Customer Support</span><span class="text-red-400 font-bold">🚨</span></div><span class="text-red-400 font-semibold">43%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-red-700 to-red-500" style="width:43%"></div></div></div>
+        <div class="space-y-2" id="heatmapRows">
+          <div class="dept-row" data-dept="engineering"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Engineering</span><span class="text-emerald-400 font-semibold">81%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:81%"></div></div></div>
+          <div class="dept-row" data-dept="legal"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Legal</span><span class="text-emerald-400 font-semibold">78%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:78%"></div></div></div>
+          <div class="dept-row" data-dept="product"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Product</span><span class="text-emerald-400 font-semibold">74%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:74%"></div></div></div>
+          <div class="dept-row" data-dept="marketing"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Marketing</span><span class="text-emerald-400 font-semibold">71%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-emerald-600 to-emerald-400" style="width:71%"></div></div></div>
+          <div class="dept-row" data-dept="sales"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Sales</span><span class="text-amber-400 font-semibold">68%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-amber-600 to-amber-400" style="width:68%"></div></div></div>
+          <div class="dept-row" data-dept="hr"><div class="flex justify-between text-xs mb-1"><span class="text-gray-300">HR</span><span class="text-amber-400 font-semibold">59%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-amber-600 to-amber-400" style="width:59%"></div></div></div>
+          <div class="dept-row" data-dept="finance"><div class="flex justify-between text-xs mb-1"><div class="flex items-center gap-1"><span class="text-gray-300">Finance</span><span class="text-orange-400">⚠</span></div><span class="text-orange-400 font-semibold">55%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-orange-600 to-orange-400" style="width:55%"></div></div></div>
+          <div class="dept-row" data-dept="customer-support"><div class="flex justify-between text-xs mb-1"><div class="flex items-center gap-1"><span class="text-gray-300">Customer Support</span><span class="text-red-400">🚨</span></div><span class="text-red-400 font-semibold">43%</span></div><div class="h-2 bg-gray-800 rounded-full overflow-hidden"><div class="h-full rounded-full bar-grow bg-gradient-to-r from-red-700 to-red-500" style="width:43%"></div></div></div>
         </div>
-        <div class="mt-4 p-3 rounded-xl border bg-orange-950/40 alert-ring">
-          <div class="flex items-start gap-2.5">
-            <div class="text-xl mt-0.5">⚠️</div>
-            <div>
-              <div class="text-orange-300 font-semibold text-xs">Burnout Warning — Customer Support</div>
-              <div class="text-gray-400 text-xs mt-1 leading-relaxed">Satisfaction dropped <span class="text-red-400 font-bold">−18 pts</span> in 60 days. Immediate HR intervention needed.</div>
-            </div>
-          </div>
+        <div class="mt-3 p-2.5 rounded-xl border bg-orange-950/40 alert-ring">
+          <div class="flex items-start gap-2"><div class="text-base">⚠️</div><div><div class="text-orange-300 font-semibold text-xs">Burnout Warning — Customer Support</div><div class="text-gray-400 text-xs mt-0.5">−18 pts in 60 days. Immediate action needed.</div></div></div>
         </div>
       </div>
 
       <!-- AI Keywords -->
-      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.20s">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">Top AI Keywords</div>
-            <div class="text-gray-500 text-xs">NLP Topic Clustering · Open-ended</div>
-          </div>
+      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:.14s">
+        <div class="flex items-center justify-between mb-3">
+          <div><div class="text-white font-semibold text-sm">Top AI Keywords</div><div class="text-gray-500 text-xs">NLP Topic Clustering · Open-ended</div></div>
           <span class="text-xs bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded-lg border border-emerald-700/40">GPT-4o</span>
         </div>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <span class="kw-tag bg-indigo-900/70 text-indigo-200 px-3 py-1.5 rounded-lg text-base font-bold border border-indigo-700/40">Work-life Balance</span>
-          <span class="kw-tag bg-red-900/60 text-red-300 px-2.5 py-1.5 rounded-lg text-sm font-semibold border border-red-800/40">Workload</span>
-          <span class="kw-tag bg-amber-900/60 text-amber-300 px-2 py-1 rounded-lg text-sm border border-amber-800/40">สวัสดิการ</span>
-          <span class="kw-tag bg-purple-900/60 text-purple-300 px-2.5 py-1 rounded-lg text-sm border border-purple-800/40">Remote Work</span>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="kw-tag bg-indigo-900/70 text-indigo-200 px-3 py-1.5 rounded-lg text-sm font-bold border border-indigo-700/40">Work-life Balance</span>
+          <span class="kw-tag bg-red-900/60 text-red-300 px-2 py-1 rounded-lg text-sm font-semibold border border-red-800/40">Workload</span>
+          <span class="kw-tag bg-amber-900/60 text-amber-300 px-2 py-1 rounded-lg text-xs border border-amber-800/40">สวัสดิการ</span>
+          <span class="kw-tag bg-purple-900/60 text-purple-300 px-2 py-1 rounded-lg text-xs border border-purple-800/40">Remote Work</span>
           <span class="kw-tag bg-cyan-900/60 text-cyan-300 px-2 py-1 rounded-lg text-xs border border-cyan-800/40">Salary</span>
           <span class="kw-tag bg-blue-900/60 text-blue-300 px-2 py-1 rounded-lg text-xs border border-blue-800/40">Career Growth</span>
           <span class="kw-tag bg-pink-900/60 text-pink-300 px-2 py-1 rounded-lg text-xs border border-pink-800/40">Team Culture</span>
-          <span class="kw-tag bg-orange-900/60 text-orange-300 px-2 py-1 rounded-lg text-sm font-medium border border-orange-800/40">Burnout</span>
+          <span class="kw-tag bg-orange-900/60 text-orange-300 px-2 py-1 rounded-lg text-xs border border-orange-800/40">Burnout</span>
           <span class="kw-tag bg-teal-900/60 text-teal-300 px-2 py-1 rounded-lg text-xs border border-teal-800/40">Recognition</span>
           <span class="kw-tag bg-violet-900/60 text-violet-300 px-2 py-1 rounded-lg text-xs border border-violet-800/40">Leadership</span>
         </div>
-        <div class="border-t border-gray-800 pt-3">
-          <div class="text-gray-500 text-xs font-semibold mb-2.5 uppercase tracking-wide">Topic Frequency</div>
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-indigo-500"></div><span class="text-gray-300">Work-life Balance</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-indigo-500 rounded-full" style="width:100%"></div></div><span class="text-gray-500 w-20 text-right">312 mentions</span></div></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500"></div><span class="text-gray-300">Workload & Overtime</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full" style="width:84%"></div></div><span class="text-gray-500 w-20 text-right">261 mentions</span></div></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-gray-300">สวัสดิการ / Benefits</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:67%"></div></div><span class="text-gray-500 w-20 text-right">208 mentions</span></div></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-gray-300">Career Development</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-purple-500 rounded-full" style="width:56%"></div></div><span class="text-gray-500 w-20 text-right">176 mentions</span></div></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-cyan-500"></div><span class="text-gray-300">Remote Work Policy</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-cyan-500 rounded-full" style="width:46%"></div></div><span class="text-gray-500 w-20 text-right">143 mentions</span></div></div>
-          </div>
+        <div class="border-t border-gray-800 pt-2.5 space-y-2">
+          <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-indigo-500"></div><span class="text-gray-300">Work-life Balance</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-indigo-500 rounded-full" style="width:100%"></div></div><span class="text-gray-500 w-20 text-right">312 mentions</span></div></div>
+          <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500"></div><span class="text-gray-300">Workload & Overtime</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full" style="width:84%"></div></div><span class="text-gray-500 w-20 text-right">261 mentions</span></div></div>
+          <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-gray-300">สวัสดิการ / Benefits</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:67%"></div></div><span class="text-gray-500 w-20 text-right">208 mentions</span></div></div>
+          <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-purple-500"></div><span class="text-gray-300">Career Development</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-purple-500 rounded-full" style="width:56%"></div></div><span class="text-gray-500 w-20 text-right">176 mentions</span></div></div>
+          <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-cyan-500"></div><span class="text-gray-300">Remote Work Policy</span></div><div class="flex items-center gap-2"><div class="h-1 w-16 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-cyan-500 rounded-full" style="width:46%"></div></div><span class="text-gray-500 w-20 text-right">143 mentions</span></div></div>
         </div>
       </div>
     </div>
 
     <!-- Row 2: Trend + Insights -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <!-- Trend Chart -->
-      <div class="glass rounded-2xl p-5 md:col-span-2 fade-up" style="animation-delay:0.24s">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">Satisfaction Trend</div>
-            <div class="text-gray-500 text-xs">6-Month Rolling · Nov 2024 – Apr 2025</div>
-          </div>
-          <div class="flex items-center gap-4 text-xs">
-            <div class="flex items-center gap-1.5"><div class="w-5 h-0.5 bg-indigo-400 rounded"></div><span class="text-gray-400">Overall</span></div>
-            <div class="flex items-center gap-1.5"><svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/></svg><span class="text-gray-400">Cust. Support</span></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="glass rounded-2xl p-5 md:col-span-2 fade-up" style="animation-delay:.18s">
+        <div class="flex items-center justify-between mb-3">
+          <div><div class="text-white font-semibold text-sm">Satisfaction Trend</div><div class="text-gray-500 text-xs" id="trendSubtitle">6-Month Rolling · Nov 2024 – Apr 2025</div></div>
+          <div class="flex items-center gap-3 text-xs">
+            <div class="flex items-center gap-1.5"><div class="w-4 h-0.5 bg-indigo-400 rounded"></div><span class="text-gray-400">Overall</span></div>
+            <div class="flex items-center gap-1.5"><svg width="16" height="4"><line x1="0" y1="2" x2="16" y2="2" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/></svg><span class="text-gray-400">Cust. Support</span></div>
           </div>
         </div>
-        <!-- Y: 40–90 → svg 155–20 (135px). formula: y = 155-(val-40)/50*135 -->
-        <svg viewBox="0 0 600 185" class="w-full" preserveAspectRatio="xMidYMid meet">
+        <svg viewBox="0 0 600 175" class="w-full" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="indGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#6366F1;stop-opacity:.35"/><stop offset="100%" style="stop-color:#6366F1;stop-opacity:0"/></linearGradient>
-            <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#EF4444;stop-opacity:.18"/><stop offset="100%" style="stop-color:#EF4444;stop-opacity:0"/></linearGradient>
+            <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#EF4444;stop-opacity:.15"/><stop offset="100%" style="stop-color:#EF4444;stop-opacity:0"/></linearGradient>
           </defs>
           <line x1="50" y1="20"  x2="578" y2="20"  stroke="#1f2937" stroke-width="1"/>
           <line x1="50" y1="47"  x2="578" y2="47"  stroke="#1f2937" stroke-width="1"/>
           <line x1="50" y1="74"  x2="578" y2="74"  stroke="#1f2937" stroke-width="1"/>
           <line x1="50" y1="101" x2="578" y2="101" stroke="#1f2937" stroke-width="1"/>
           <line x1="50" y1="128" x2="578" y2="128" stroke="#1f2937" stroke-width="1"/>
-          <line x1="50" y1="155" x2="578" y2="155" stroke="#1f2937" stroke-width="1"/>
-          <text x="42" y="24"  text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">90</text>
-          <text x="42" y="51"  text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">80</text>
-          <text x="42" y="78"  text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">70</text>
-          <text x="42" y="105" text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">60</text>
-          <text x="42" y="132" text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">50</text>
-          <text x="42" y="159" text-anchor="end" fill="#4B5563" font-size="10" font-family="Inter">40</text>
-          <path d="M90,79 L180,88 L270,106 L360,123 L450,136 L540,147 L540,155 L90,155 Z" fill="url(#redGrad)"/>
+          <line x1="50" y1="150" x2="578" y2="150" stroke="#1f2937" stroke-width="1"/>
+          <text x="42" y="24"  text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">90</text>
+          <text x="42" y="51"  text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">80</text>
+          <text x="42" y="78"  text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">70</text>
+          <text x="42" y="105" text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">60</text>
+          <text x="42" y="132" text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">50</text>
+          <text x="42" y="154" text-anchor="end" fill="#4B5563" font-size="9" font-family="Inter">40</text>
+          <path d="M90,79 180,88 270,106 360,123 450,136 540,147" fill="none"/>
+          <path d="M90,79 L180,88 L270,106 L360,123 L450,136 L540,147 L540,150 L90,150 Z" fill="url(#redGrad)"/>
           <polyline points="90,79 180,88 270,106 360,123 450,136 540,147" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="5,3" stroke-linejoin="round" opacity=".8"/>
-          <path d="M90,96 L180,106 L270,98 L360,82 L450,90 L540,69 L540,155 L90,155 Z" fill="url(#indGrad)"/>
+          <path d="M90,96 L180,106 L270,98 L360,82 L450,90 L540,69 L540,150 L90,150 Z" fill="url(#indGrad)"/>
           <polyline points="90,96 180,106 270,98 360,82 450,90 540,69" fill="none" stroke="#6366F1" stroke-width="2.5" stroke-linejoin="round"/>
           <circle cx="90"  cy="96"  r="4" fill="#6366F1" stroke="#030712" stroke-width="2"/>
           <circle cx="180" cy="106" r="4" fill="#6366F1" stroke="#030712" stroke-width="2"/>
@@ -377,573 +390,343 @@
           <circle cx="360" cy="82"  r="4" fill="#6366F1" stroke="#030712" stroke-width="2"/>
           <circle cx="450" cy="90"  r="4" fill="#6366F1" stroke="#030712" stroke-width="2"/>
           <circle cx="540" cy="69"  r="6" fill="#6366F1" stroke="white" stroke-width="2"/>
-          <text x="545" y="65" fill="#818CF8" font-size="11" font-weight="700" font-family="Inter">72</text>
+          <text x="546" y="65" fill="#818CF8" font-size="10" font-weight="700" font-family="Inter">72</text>
           <circle cx="90"  cy="79"  r="3" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="180" cy="88"  r="3" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="270" cy="106" r="3" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="360" cy="123" r="3" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="450" cy="136" r="3" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="540" cy="147" r="5" fill="#EF4444" stroke="white" stroke-width="1.5"/>
-          <text x="545" y="152" fill="#F87171" font-size="11" font-weight="700" font-family="Inter">43</text>
-          <text x="90"  y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Nov '24</text>
-          <text x="180" y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Dec '24</text>
-          <text x="270" y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Jan '25</text>
-          <text x="360" y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Feb '25</text>
-          <text x="450" y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Mar '25</text>
-          <text x="540" y="175" text-anchor="middle" fill="#4B5563" font-size="10" font-family="Inter">Apr '25</text>
+          <text x="546" y="151" fill="#F87171" font-size="10" font-weight="700" font-family="Inter">43</text>
+          <text x="90"  y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Nov '24</text>
+          <text x="180" y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Dec '24</text>
+          <text x="270" y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Jan '25</text>
+          <text x="360" y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Feb '25</text>
+          <text x="450" y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Mar '25</text>
+          <text x="540" y="168" text-anchor="middle" fill="#4B5563" font-size="9" font-family="Inter">Apr '25</text>
         </svg>
       </div>
-
       <!-- AI Insights -->
-      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.28s">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">AI-Generated Insights</div>
-            <div class="text-gray-500 text-xs">Top 3 Critical Concerns</div>
-          </div>
-          <div class="w-7 h-7 rounded-lg bg-indigo-600/30 flex items-center justify-center border border-indigo-600/40">
-            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-          </div>
+      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:.22s">
+        <div class="flex items-center justify-between mb-3">
+          <div><div class="text-white font-semibold text-sm">AI-Generated Insights</div><div class="text-gray-500 text-xs">Top 3 Critical Concerns</div></div>
+          <div class="w-6 h-6 rounded-lg bg-indigo-600/30 flex items-center justify-center border border-indigo-600/40"><svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
         </div>
-        <div class="mb-3 p-3 rounded-xl bg-red-950/50 border border-red-800/40">
-          <div class="flex items-start gap-2.5">
-            <div class="w-5 h-5 rounded-full bg-red-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-red-300 text-xs font-bold">1</span></div>
-            <div>
-              <div class="text-red-300 font-semibold text-xs mb-1">Workload & Burnout</div>
-              <div class="text-gray-400 text-xs leading-relaxed mb-2">"งานเยอะเกินไป ไม่มีเวลาส่วนตัว" — All depts, Customer Support critical.</div>
-              <div class="flex items-center gap-1"><span class="text-red-500 text-xs">Risk:</span><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div></div><span class="text-red-400 text-xs font-bold">Critical</span></div>
-            </div>
-          </div>
+        <div class="space-y-2.5">
+          <div class="p-3 rounded-xl bg-red-950/50 border border-red-800/40"><div class="flex items-start gap-2"><div class="w-4 h-4 rounded-full bg-red-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-red-300 text-xs font-bold">1</span></div><div><div class="text-red-300 font-semibold text-xs mb-1">Workload & Burnout</div><div class="text-gray-400 text-xs leading-relaxed">"งานเยอะเกินไป ไม่มีเวลาส่วนตัว" — Customer Support critical.</div><div class="flex items-center gap-1 mt-1"><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div></div><span class="text-red-400 text-xs font-bold">Critical</span></div></div></div></div>
+          <div class="p-3 rounded-xl bg-amber-950/50 border border-amber-800/40"><div class="flex items-start gap-2"><div class="w-4 h-4 rounded-full bg-amber-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-amber-300 text-xs font-bold">2</span></div><div><div class="text-amber-300 font-semibold text-xs mb-1">Career Development Gap</div><div class="text-gray-400 text-xs leading-relaxed">"ไม่เห็นเส้นทางการเติบโต" — Engineering & Sales.</div><div class="flex items-center gap-1 mt-1"><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div></div><span class="text-amber-400 text-xs font-bold">High</span></div></div></div></div>
+          <div class="p-3 rounded-xl bg-blue-950/50 border border-blue-800/40"><div class="flex items-start gap-2"><div class="w-4 h-4 rounded-full bg-blue-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-blue-300 text-xs font-bold">3</span></div><div><div class="text-blue-300 font-semibold text-xs mb-1">Benefits & Compensation</div><div class="text-gray-400 text-xs leading-relaxed">"สวัสดิการไม่ตรงความต้องการ" — 208 mentions.</div><div class="flex items-center gap-1 mt-1"><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div></div><span class="text-blue-400 text-xs font-bold">Medium</span></div></div></div></div>
         </div>
-        <div class="mb-3 p-3 rounded-xl bg-amber-950/50 border border-amber-800/40">
-          <div class="flex items-start gap-2.5">
-            <div class="w-5 h-5 rounded-full bg-amber-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-amber-300 text-xs font-bold">2</span></div>
-            <div>
-              <div class="text-amber-300 font-semibold text-xs mb-1">Career Development Gap</div>
-              <div class="text-gray-400 text-xs leading-relaxed mb-2">"ไม่เห็นเส้นทางการเติบโต" — Engineering & Sales.</div>
-              <div class="flex items-center gap-1"><span class="text-amber-500 text-xs">Risk:</span><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div></div><span class="text-amber-400 text-xs font-bold">High</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="p-3 rounded-xl bg-blue-950/50 border border-blue-800/40">
-          <div class="flex items-start gap-2.5">
-            <div class="w-5 h-5 rounded-full bg-blue-800/60 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-blue-300 text-xs font-bold">3</span></div>
-            <div>
-              <div class="text-blue-300 font-semibold text-xs mb-1">Benefits & Compensation</div>
-              <div class="text-gray-400 text-xs leading-relaxed mb-2">"สวัสดิการไม่ตรงความต้องการ" — 208 mentions.</div>
-              <div class="flex items-center gap-1"><span class="text-blue-500 text-xs">Risk:</span><div class="flex gap-0.5"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div></div><span class="text-blue-400 text-xs font-bold">Medium</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-1.5">
-          <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 pulse-dot"></div>
-          <span class="text-gray-600 text-xs">Powered by GPT-4o · 847 responses</span>
-        </div>
+        <div class="mt-2 pt-2 border-t border-gray-800 flex items-center justify-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 pulse-dot"></div><span class="text-gray-600 text-xs">GPT-4o · 847 responses</span></div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════
        TAB 2 — 360° EMOTIONS
-  ══════════════════════════════════════════════ -->
+  ════════════════════════════════════════════════ -->
   <div id="tab-emotions" class="tab-content">
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-
-      <!-- Radar Chart (2/5) -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
       <div class="glass rounded-2xl p-5 md:col-span-2 fade-up">
         <div class="flex items-center justify-between mb-3">
-          <div>
-            <div class="text-white font-semibold text-sm">360° Emotion Radar</div>
-            <div class="text-gray-500 text-xs">Multi-dimensional sentiment · NLP classified</div>
-          </div>
+          <div><div class="text-white font-semibold text-sm">360° Emotion Radar</div><div class="text-gray-500 text-xs">Multi-dimensional · NLP classified</div></div>
           <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-lg border border-purple-700/40">Deep Analysis</span>
         </div>
-        <!--
-          Center (160,160) maxR=120 | 6 axes 60° apart, CW from top
-          Values: Frustrated=45%, Hopeful=62%, Satisfied=52%, Disappointed=38%, Confident=44%, Anxious=28%
-          Data points:
-            Frustrated   (0,-1)   r=54   → (160,106)
-            Hopeful      (.866,-.5) r=74.4→ (224.4,122.8)
-            Satisfied    (.866,.5) r=62.4 → (214.1,191.2)
-            Disappointed (0,1)    r=45.6  → (160,205.6)
-            Confident    (-.866,.5) r=52.8→ (114.3,186.4)
-            Anxious      (-.866,-.5) r=33.6→(130.9,143.2)
-        -->
         <svg viewBox="0 0 320 320" class="w-full max-w-xs mx-auto">
-          <defs>
-            <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6366F1;stop-opacity:.5"/>
-              <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:.3"/>
-            </linearGradient>
-          </defs>
-          <!-- Grid rings -->
+          <defs><linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6366F1;stop-opacity:.5"/><stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:.3"/></linearGradient></defs>
           <polygon points="160,130 185.98,145 185.98,175 160,190 134.02,175 134.02,145" fill="none" stroke="#1f2937" stroke-width="1"/>
           <polygon points="160,100 211.96,130 211.96,190 160,220 108.04,190 108.04,130" fill="none" stroke="#1f2937" stroke-width="1"/>
           <polygon points="160,70 237.94,115 237.94,205 160,250 82.06,205 82.06,115"   fill="none" stroke="#1f2937" stroke-width="1"/>
           <polygon points="160,40 263.92,100 263.92,220 160,280 56.08,220 56.08,100"   fill="none" stroke="#374151" stroke-width="1"/>
-          <!-- Axes -->
-          <line x1="160" y1="160" x2="160"   y2="40"  stroke="#374151" stroke-width="1"/>
-          <line x1="160" y1="160" x2="263.92" y2="100" stroke="#374151" stroke-width="1"/>
-          <line x1="160" y1="160" x2="263.92" y2="220" stroke="#374151" stroke-width="1"/>
-          <line x1="160" y1="160" x2="160"   y2="280" stroke="#374151" stroke-width="1"/>
-          <line x1="160" y1="160" x2="56.08"  y2="220" stroke="#374151" stroke-width="1"/>
-          <line x1="160" y1="160" x2="56.08"  y2="100" stroke="#374151" stroke-width="1"/>
-          <!-- Data polygon -->
-          <polygon points="160,106 224.4,122.8 214.1,191.2 160,205.6 114.3,186.4 130.9,143.2"
-                   fill="url(#radarFill)" stroke="#6366F1" stroke-width="2" stroke-linejoin="round"/>
-          <!-- Data dots -->
+          <line x1="160" y1="160" x2="160"    y2="40"  stroke="#374151" stroke-width="1"/>
+          <line x1="160" y1="160" x2="263.92"  y2="100" stroke="#374151" stroke-width="1"/>
+          <line x1="160" y1="160" x2="263.92"  y2="220" stroke="#374151" stroke-width="1"/>
+          <line x1="160" y1="160" x2="160"    y2="280" stroke="#374151" stroke-width="1"/>
+          <line x1="160" y1="160" x2="56.08"   y2="220" stroke="#374151" stroke-width="1"/>
+          <line x1="160" y1="160" x2="56.08"   y2="100" stroke="#374151" stroke-width="1"/>
+          <polygon points="160,106 224.4,122.8 214.1,191.2 160,205.6 114.3,186.4 130.9,143.2" fill="url(#radarFill)" stroke="#6366F1" stroke-width="2" stroke-linejoin="round"/>
           <circle cx="160"   cy="106"   r="5" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
           <circle cx="224.4" cy="122.8" r="5" fill="#10B981" stroke="#030712" stroke-width="1.5"/>
           <circle cx="214.1" cy="191.2" r="5" fill="#6366F1" stroke="#030712" stroke-width="1.5"/>
           <circle cx="160"   cy="205.6" r="5" fill="#F97316" stroke="#030712" stroke-width="1.5"/>
           <circle cx="114.3" cy="186.4" r="5" fill="#06B6D4" stroke="#030712" stroke-width="1.5"/>
           <circle cx="130.9" cy="143.2" r="5" fill="#A855F7" stroke="#030712" stroke-width="1.5"/>
-          <!-- Labels -->
           <text x="160" y="28"  text-anchor="middle" fill="#FCA5A5" font-size="10" font-weight="600" font-family="Inter">Frustrated 45%</text>
           <text x="280" y="96"  text-anchor="start"  fill="#6EE7B7" font-size="10" font-weight="600" font-family="Inter">Hopeful 62%</text>
           <text x="280" y="228" text-anchor="start"  fill="#A5B4FC" font-size="10" font-weight="600" font-family="Inter">Satisfied 52%</text>
           <text x="160" y="298" text-anchor="middle" fill="#FDBA74" font-size="10" font-weight="600" font-family="Inter">Disappointed 38%</text>
           <text x="40"  y="228" text-anchor="end"    fill="#67E8F9" font-size="10" font-weight="600" font-family="Inter">Confident 44%</text>
           <text x="40"  y="96"  text-anchor="end"    fill="#D8B4FE" font-size="10" font-weight="600" font-family="Inter">Anxious 28%</text>
-          <!-- Grid % -->
           <text x="162" y="189" fill="#4B5563" font-size="8" font-family="Inter">25%</text>
           <text x="162" y="219" fill="#4B5563" font-size="8" font-family="Inter">50%</text>
           <text x="162" y="249" fill="#4B5563" font-size="8" font-family="Inter">75%</text>
         </svg>
       </div>
-
-      <!-- Emotion Cards (3/5) -->
-      <div class="glass rounded-2xl p-5 md:col-span-3 fade-up" style="animation-delay:0.08s">
+      <div class="glass rounded-2xl p-5 md:col-span-3 fade-up" style="animation-delay:.08s">
         <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">Emotion Breakdown</div>
-            <div class="text-gray-500 text-xs">Classified from 847 open-ended responses · GPT-4o</div>
-          </div>
+          <div><div class="text-white font-semibold text-sm">Emotion Breakdown</div><div class="text-gray-500 text-xs">Classified from 847 responses · GPT-4o</div></div>
           <span class="text-xs bg-rose-900/50 text-rose-300 px-2 py-1 rounded-lg border border-rose-700/40">6 Emotions</span>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <div class="emotion-card glass rounded-xl p-3 border border-red-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">😤</span><span class="text-red-400 font-black text-lg">45%</span></div>
-            <div class="text-red-300 font-semibold text-xs mb-1">Frustrated</div>
-            <div class="h-1 bg-red-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-red-500 rounded-full bar-grow" style="width:45%"></div></div>
-            <div class="text-gray-500 text-xs">Heavy workload pressure</div>
-          </div>
-          <div class="emotion-card glass rounded-xl p-3 border border-emerald-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">🌟</span><span class="text-emerald-400 font-black text-lg">62%</span></div>
-            <div class="text-emerald-300 font-semibold text-xs mb-1">Hopeful</div>
-            <div class="h-1 bg-emerald-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-emerald-500 rounded-full bar-grow" style="width:62%"></div></div>
-            <div class="text-gray-500 text-xs">Optimistic about change</div>
-          </div>
-          <div class="emotion-card glass rounded-xl p-3 border border-indigo-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">😊</span><span class="text-indigo-400 font-black text-lg">52%</span></div>
-            <div class="text-indigo-300 font-semibold text-xs mb-1">Satisfied</div>
-            <div class="h-1 bg-indigo-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-indigo-500 rounded-full bar-grow" style="width:52%"></div></div>
-            <div class="text-gray-500 text-xs">Team culture & peers</div>
-          </div>
-          <div class="emotion-card glass rounded-xl p-3 border border-orange-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">😞</span><span class="text-orange-400 font-black text-lg">38%</span></div>
-            <div class="text-orange-300 font-semibold text-xs mb-1">Disappointed</div>
-            <div class="h-1 bg-orange-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-orange-500 rounded-full bar-grow" style="width:38%"></div></div>
-            <div class="text-gray-500 text-xs">Benefits & pay gap</div>
-          </div>
-          <div class="emotion-card glass rounded-xl p-3 border border-cyan-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">💪</span><span class="text-cyan-400 font-black text-lg">44%</span></div>
-            <div class="text-cyan-300 font-semibold text-xs mb-1">Confident</div>
-            <div class="h-1 bg-cyan-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-cyan-500 rounded-full bar-grow" style="width:44%"></div></div>
-            <div class="text-gray-500 text-xs">Company direction</div>
-          </div>
-          <div class="emotion-card glass rounded-xl p-3 border border-purple-800/30">
-            <div class="flex items-center justify-between mb-2"><span class="text-xl">😰</span><span class="text-purple-400 font-black text-lg">28%</span></div>
-            <div class="text-purple-300 font-semibold text-xs mb-1">Anxious</div>
-            <div class="h-1 bg-purple-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-purple-500 rounded-full bar-grow" style="width:28%"></div></div>
-            <div class="text-gray-500 text-xs">Workload sustainability</div>
-          </div>
+          <div class="emotion-card glass rounded-xl p-3 border border-red-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">😤</span><span class="text-red-400 font-black text-lg">45%</span></div><div class="text-red-300 font-semibold text-xs mb-1">Frustrated</div><div class="h-1 bg-red-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-red-500 rounded-full bar-grow" style="width:45%"></div></div><div class="text-gray-500 text-xs">Heavy workload pressure</div></div>
+          <div class="emotion-card glass rounded-xl p-3 border border-emerald-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">🌟</span><span class="text-emerald-400 font-black text-lg">62%</span></div><div class="text-emerald-300 font-semibold text-xs mb-1">Hopeful</div><div class="h-1 bg-emerald-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-emerald-500 rounded-full bar-grow" style="width:62%"></div></div><div class="text-gray-500 text-xs">Optimistic about change</div></div>
+          <div class="emotion-card glass rounded-xl p-3 border border-indigo-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">😊</span><span class="text-indigo-400 font-black text-lg">52%</span></div><div class="text-indigo-300 font-semibold text-xs mb-1">Satisfied</div><div class="h-1 bg-indigo-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-indigo-500 rounded-full bar-grow" style="width:52%"></div></div><div class="text-gray-500 text-xs">Team culture & peers</div></div>
+          <div class="emotion-card glass rounded-xl p-3 border border-orange-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">😞</span><span class="text-orange-400 font-black text-lg">38%</span></div><div class="text-orange-300 font-semibold text-xs mb-1">Disappointed</div><div class="h-1 bg-orange-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-orange-500 rounded-full bar-grow" style="width:38%"></div></div><div class="text-gray-500 text-xs">Benefits & pay gap</div></div>
+          <div class="emotion-card glass rounded-xl p-3 border border-cyan-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">💪</span><span class="text-cyan-400 font-black text-lg">44%</span></div><div class="text-cyan-300 font-semibold text-xs mb-1">Confident</div><div class="h-1 bg-cyan-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-cyan-500 rounded-full bar-grow" style="width:44%"></div></div><div class="text-gray-500 text-xs">Company direction</div></div>
+          <div class="emotion-card glass rounded-xl p-3 border border-purple-800/30"><div class="flex items-center justify-between mb-2"><span class="text-xl">😰</span><span class="text-purple-400 font-black text-lg">28%</span></div><div class="text-purple-300 font-semibold text-xs mb-1">Anxious</div><div class="h-1 bg-purple-900/40 rounded-full overflow-hidden mb-1.5"><div class="h-full bg-purple-500 rounded-full bar-grow" style="width:28%"></div></div><div class="text-gray-500 text-xs">Workload sustainability</div></div>
         </div>
-        <div class="mt-3 pt-3 border-t border-gray-800 text-gray-600 text-xs text-center">
-          * Emotions are non-exclusive — one response may express multiple emotions simultaneously
-        </div>
+        <div class="mt-3 pt-3 border-t border-gray-800 text-gray-600 text-xs text-center">* Emotions are non-exclusive — one response may express multiple emotions</div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════
        TAB 3 — TOPIC EXPLORER
-  ══════════════════════════════════════════════ -->
+  ════════════════════════════════════════════════ -->
   <div id="tab-topics" class="tab-content">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-      <!-- Treemap (2/3) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div class="glass rounded-2xl p-5 md:col-span-2 fade-up">
         <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">AI Topic Clustering — Treemap</div>
-            <div class="text-gray-500 text-xs">Block size = mention frequency · 10 clusters</div>
-          </div>
+          <div><div class="text-white font-semibold text-sm">AI Topic Clustering — Treemap</div><div class="text-gray-500 text-xs">Block size = mention frequency · 10 clusters</div></div>
           <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-1 rounded-lg border border-amber-700/40">NLP Clustered</span>
         </div>
-        <!--
-          viewBox 558×222 | Row1 h=84 | Row2 h=70 | Row3 h=62 (2px gaps)
-          Row1: WLB(0,303,#4338CA) | Workload(305,253,#991B1B)
-          Row2: Benefits(0,219,#92400E) | Career(221,185,#6B21A8) | Remote(408,150,#164E63)
-          Row3: Team(0,143) | Leadership(145,127) | Comms(274,110) | Recognition(386,94) | Training(482,76)
-        -->
         <svg viewBox="0 0 558 222" class="w-full rounded-xl overflow-hidden" style="display:block">
-          <rect class="treemap-cell" x="0"   y="0"   width="303" height="84" fill="#4338CA" rx="6"/>
-          <text x="151" y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Work-life Balance</text>
-          <text x="151" y="54" text-anchor="middle" fill="#C7D2FE" font-size="11" font-family="Inter">312 mentions</text>
-          <text x="151" y="70" text-anchor="middle" fill="#A5B4FC" font-size="10" font-family="Inter">#1 Topic</text>
-
-          <rect class="treemap-cell" x="305" y="0"   width="253" height="84" fill="#991B1B" rx="6"/>
-          <text x="431" y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Workload</text>
-          <text x="431" y="54" text-anchor="middle" fill="#FECACA" font-size="11" font-family="Inter">261 mentions</text>
-          <text x="431" y="70" text-anchor="middle" fill="#FCA5A5" font-size="10" font-family="Inter">⚠ High Risk</text>
-
-          <rect class="treemap-cell" x="0"   y="86"  width="219" height="70" fill="#92400E" rx="6"/>
-          <text x="109" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">สวัสดิการ / Benefits</text>
-          <text x="109" y="138" text-anchor="middle" fill="#FDE68A" font-size="10" font-family="Inter">208 mentions</text>
-
-          <rect class="treemap-cell" x="221" y="86"  width="185" height="70" fill="#6B21A8" rx="6"/>
-          <text x="313" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Career Dev.</text>
-          <text x="313" y="138" text-anchor="middle" fill="#E9D5FF" font-size="10" font-family="Inter">176 mentions</text>
-
-          <rect class="treemap-cell" x="408" y="86"  width="150" height="70" fill="#164E63" rx="6"/>
-          <text x="483" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Remote Work</text>
-          <text x="483" y="138" text-anchor="middle" fill="#A5F3FC" font-size="10" font-family="Inter">143 mentions</text>
-
-          <rect class="treemap-cell" x="0"   y="158" width="143" height="62" fill="#064E3B" rx="6"/>
-          <text x="71"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Team Culture</text>
-          <text x="71"  y="202" text-anchor="middle" fill="#A7F3D0" font-size="9" font-family="Inter">98</text>
-
-          <rect class="treemap-cell" x="145" y="158" width="127" height="62" fill="#1E3A5F" rx="6"/>
-          <text x="208" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Leadership</text>
-          <text x="208" y="202" text-anchor="middle" fill="#BAE6FD" font-size="9" font-family="Inter">87</text>
-
-          <rect class="treemap-cell" x="274" y="158" width="110" height="62" fill="#4A044E" rx="6"/>
-          <text x="329" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Communication</text>
-          <text x="329" y="202" text-anchor="middle" fill="#F5D0FE" font-size="9" font-family="Inter">76</text>
-
-          <rect class="treemap-cell" x="386" y="158" width="94"  height="62" fill="#134E4A" rx="6"/>
-          <text x="433" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Recognition</text>
-          <text x="433" y="202" text-anchor="middle" fill="#99F6E4" font-size="9" font-family="Inter">65</text>
-
-          <rect class="treemap-cell" x="482" y="158" width="76"  height="62" fill="#431407" rx="6"/>
-          <text x="520" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Training</text>
-          <text x="520" y="202" text-anchor="middle" fill="#FED7AA" font-size="9" font-family="Inter">54</text>
+          <rect class="treemap-cell" x="0"   y="0"   width="303" height="84" fill="#4338CA" rx="6"/><text x="151" y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Work-life Balance</text><text x="151" y="54" text-anchor="middle" fill="#C7D2FE" font-size="11" font-family="Inter">312 mentions</text><text x="151" y="70" text-anchor="middle" fill="#A5B4FC" font-size="10" font-family="Inter">#1 Topic</text>
+          <rect class="treemap-cell" x="305" y="0"   width="253" height="84" fill="#991B1B" rx="6"/><text x="431" y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Workload</text><text x="431" y="54" text-anchor="middle" fill="#FECACA" font-size="11" font-family="Inter">261 mentions</text><text x="431" y="70" text-anchor="middle" fill="#FCA5A5" font-size="10" font-family="Inter">⚠ High Risk</text>
+          <rect class="treemap-cell" x="0"   y="86"  width="219" height="70" fill="#92400E" rx="6"/><text x="109" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">สวัสดิการ / Benefits</text><text x="109" y="138" text-anchor="middle" fill="#FDE68A" font-size="10" font-family="Inter">208 mentions</text>
+          <rect class="treemap-cell" x="221" y="86"  width="185" height="70" fill="#6B21A8" rx="6"/><text x="313" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Career Dev.</text><text x="313" y="138" text-anchor="middle" fill="#E9D5FF" font-size="10" font-family="Inter">176 mentions</text>
+          <rect class="treemap-cell" x="408" y="86"  width="150" height="70" fill="#164E63" rx="6"/><text x="483" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Remote Work</text><text x="483" y="138" text-anchor="middle" fill="#A5F3FC" font-size="10" font-family="Inter">143 mentions</text>
+          <rect class="treemap-cell" x="0"   y="158" width="143" height="62" fill="#064E3B" rx="6"/><text x="71"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Team Culture</text><text x="71"  y="202" text-anchor="middle" fill="#A7F3D0" font-size="9" font-family="Inter">98</text>
+          <rect class="treemap-cell" x="145" y="158" width="127" height="62" fill="#1E3A5F" rx="6"/><text x="208" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Leadership</text><text x="208" y="202" text-anchor="middle" fill="#BAE6FD" font-size="9" font-family="Inter">87</text>
+          <rect class="treemap-cell" x="274" y="158" width="110" height="62" fill="#4A044E" rx="6"/><text x="329" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Communication</text><text x="329" y="202" text-anchor="middle" fill="#F5D0FE" font-size="9" font-family="Inter">76</text>
+          <rect class="treemap-cell" x="386" y="158" width="94"  height="62" fill="#134E4A" rx="6"/><text x="433" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Recognition</text><text x="433" y="202" text-anchor="middle" fill="#99F6E4" font-size="9" font-family="Inter">65</text>
+          <rect class="treemap-cell" x="482" y="158" width="76"  height="62" fill="#431407" rx="6"/><text x="520" y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Training</text><text x="520" y="202" text-anchor="middle" fill="#FED7AA" font-size="9" font-family="Inter">54</text>
         </svg>
       </div>
-
-      <!-- Verbatim (1/3) -->
-      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.08s">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <div class="text-white font-semibold text-sm">Employee Verbatim</div>
-            <div class="text-gray-500 text-xs">Real responses · AI tagged</div>
-          </div>
-        </div>
+      <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:.08s">
+        <div class="flex items-center justify-between mb-3"><div><div class="text-white font-semibold text-sm">Employee Verbatim</div><div class="text-gray-500 text-xs">Real responses · AI tagged</div></div></div>
         <div class="flex flex-wrap gap-1.5 mb-3">
-          <button class="filter-btn active text-xs px-2.5 py-1 rounded-lg border border-gray-700/50 bg-gray-800/60 text-gray-300" data-filter="all">All</button>
-          <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-red-800/50 bg-red-900/30 text-red-300" data-filter="urgent">Urgent</button>
-          <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-blue-800/50 bg-blue-900/30 text-blue-300" data-filter="constructive">Constructive</button>
-          <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-emerald-800/50 bg-emerald-900/30 text-emerald-300" data-filter="positive">Positive</button>
+          <button class="vfilter-btn active text-xs px-2.5 py-1 rounded-lg border border-gray-700/50 bg-gray-800/60 text-gray-300" data-filter="all">All</button>
+          <button class="vfilter-btn text-xs px-2.5 py-1 rounded-lg border border-red-800/50 bg-red-900/30 text-red-300" data-filter="urgent">Urgent</button>
+          <button class="vfilter-btn text-xs px-2.5 py-1 rounded-lg border border-blue-800/50 bg-blue-900/30 text-blue-300" data-filter="constructive">Constructive</button>
+          <button class="vfilter-btn text-xs px-2.5 py-1 rounded-lg border border-emerald-800/50 bg-emerald-900/30 text-emerald-300" data-filter="positive">Positive</button>
         </div>
         <div class="space-y-2.5" id="verbatimList">
-          <div class="verbatim-item rounded-xl p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent">
-            <div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span><span class="text-gray-500 text-xs">Customer Support</span></div>
-            <div class="text-gray-300 text-xs leading-relaxed">"งานเพิ่มขึ้น 3 เท่าในปีนี้ แต่ทีมไม่เพิ่มตาม พวกเราเริ่มหมดไฟกันทั้งแผนก"</div>
-            <div class="mt-1.5 flex gap-1"><span class="text-xs text-orange-400 bg-orange-900/30 px-1.5 py-0.5 rounded">Workload</span><span class="text-xs text-red-400 bg-red-900/30 px-1.5 py-0.5 rounded">Burnout</span></div>
-          </div>
-          <div class="verbatim-item rounded-xl p-3 bg-blue-950/30 border border-blue-800/30" data-tag="constructive">
-            <div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-blue-800/60 text-blue-300 px-2 py-0.5 rounded-md font-semibold">[Constructive]</span><span class="text-gray-500 text-xs">Engineering</span></div>
-            <div class="text-gray-300 text-xs leading-relaxed">"อยากให้มี work-from-home สัปดาห์ละ 2 วัน จะช่วย work-life balance ได้มาก"</div>
-            <div class="mt-1.5 flex gap-1"><span class="text-xs text-cyan-400 bg-cyan-900/30 px-1.5 py-0.5 rounded">Remote Work</span><span class="text-xs text-indigo-400 bg-indigo-900/30 px-1.5 py-0.5 rounded">WLB</span></div>
-          </div>
-          <div class="verbatim-item rounded-xl p-3 bg-emerald-950/30 border border-emerald-800/30" data-tag="positive">
-            <div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-emerald-800/60 text-emerald-300 px-2 py-0.5 rounded-md font-semibold">[Positive]</span><span class="text-gray-500 text-xs">Product</span></div>
-            <div class="text-gray-300 text-xs leading-relaxed">"ทีมและวัฒนธรรมองค์กรดีมาก แต่ career path ยังไม่ชัดเจนสำหรับ senior roles"</div>
-            <div class="mt-1.5 flex gap-1"><span class="text-xs text-emerald-400 bg-emerald-900/30 px-1.5 py-0.5 rounded">Culture</span><span class="text-xs text-purple-400 bg-purple-900/30 px-1.5 py-0.5 rounded">Career</span></div>
-          </div>
-          <div class="verbatim-item rounded-xl p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent">
-            <div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span><span class="text-gray-500 text-xs">Finance</span></div>
-            <div class="text-gray-300 text-xs leading-relaxed">"สวัสดิการรักษาพยาบาลครอบคลุมน้อยเกินไป ไม่รวมครอบครัว ควรปรับปรุง"</div>
-            <div class="mt-1.5 flex gap-1"><span class="text-xs text-amber-400 bg-amber-900/30 px-1.5 py-0.5 rounded">Benefits</span></div>
-          </div>
+          <div class="verbatim-item p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent"><div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span><span class="text-gray-500 text-xs">Customer Support</span></div><div class="text-gray-300 text-xs leading-relaxed">"งานเพิ่มขึ้น 3 เท่าในปีนี้ แต่ทีมไม่เพิ่มตาม พวกเราเริ่มหมดไฟกันทั้งแผนก"</div><div class="mt-1.5 flex gap-1"><span class="text-xs text-orange-400 bg-orange-900/30 px-1.5 py-0.5 rounded">Workload</span><span class="text-xs text-red-400 bg-red-900/30 px-1.5 py-0.5 rounded">Burnout</span></div></div>
+          <div class="verbatim-item p-3 bg-blue-950/30 border border-blue-800/30" data-tag="constructive"><div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-blue-800/60 text-blue-300 px-2 py-0.5 rounded-md font-semibold">[Constructive]</span><span class="text-gray-500 text-xs">Engineering</span></div><div class="text-gray-300 text-xs leading-relaxed">"อยากให้มี work-from-home สัปดาห์ละ 2 วัน จะช่วย work-life balance ได้มาก"</div><div class="mt-1.5 flex gap-1"><span class="text-xs text-cyan-400 bg-cyan-900/30 px-1.5 py-0.5 rounded">Remote Work</span><span class="text-xs text-indigo-400 bg-indigo-900/30 px-1.5 py-0.5 rounded">WLB</span></div></div>
+          <div class="verbatim-item p-3 bg-emerald-950/30 border border-emerald-800/30" data-tag="positive"><div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-emerald-800/60 text-emerald-300 px-2 py-0.5 rounded-md font-semibold">[Positive]</span><span class="text-gray-500 text-xs">Product</span></div><div class="text-gray-300 text-xs leading-relaxed">"ทีมและวัฒนธรรมองค์กรดีมาก แต่ career path ยังไม่ชัดเจนสำหรับ senior roles"</div><div class="mt-1.5 flex gap-1"><span class="text-xs text-emerald-400 bg-emerald-900/30 px-1.5 py-0.5 rounded">Culture</span><span class="text-xs text-purple-400 bg-purple-900/30 px-1.5 py-0.5 rounded">Career</span></div></div>
+          <div class="verbatim-item p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent"><div class="flex items-center gap-1.5 mb-1.5"><span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span><span class="text-gray-500 text-xs">Finance</span></div><div class="text-gray-300 text-xs leading-relaxed">"สวัสดิการรักษาพยาบาลครอบคลุมน้อยเกินไป ไม่รวมครอบครัว ควรปรับปรุง"</div><div class="mt-1.5 flex gap-1"><span class="text-xs text-amber-400 bg-amber-900/30 px-1.5 py-0.5 rounded">Benefits</span></div></div>
         </div>
-        <div class="mt-3 text-center text-gray-600 text-xs">Showing 4 of 847 responses</div>
+        <div class="mt-2 text-center text-gray-600 text-xs">Showing 4 of 847 responses</div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════
        TAB 4 — CORRELATION MAP
-  ══════════════════════════════════════════════ -->
+  ════════════════════════════════════════════════ -->
   <div id="tab-correlation" class="tab-content">
     <div class="glass rounded-2xl p-5 fade-up">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <div class="text-white font-semibold text-sm">Topic × Emotion Correlation Map</div>
-          <div class="text-gray-500 text-xs">Bubble size = correlation strength · Reveals which topics drive which emotions</div>
-        </div>
+      <div class="flex items-center justify-between mb-5">
+        <div><div class="text-white font-semibold text-sm">Topic × Emotion Correlation Map</div><div class="text-gray-500 text-xs">Bubble size = correlation strength · Which topics drive which emotions</div></div>
         <span class="text-xs bg-cyan-900/50 text-cyan-300 px-2 py-1 rounded-lg border border-cyan-700/40">AI Computed</span>
       </div>
-      <!--
-        viewBox 680×320
-        Cols (emotions) X: 195, 300, 405, 510, 615
-        Rows (topics)  Y: 75, 135, 195, 255, 315
-        Bubble radius = strength/10 * 26 (max 26px)
-        Strengths (0-10):
-               Fr  Di  Ho  Sa  Co
-        WLB:    7   4   6   3   2
-        WL:     9   7   2   1   1
-        Ben:    5   8   5   2   2
-        CD:     4   6   8   4   5
-        RW:     3   2   9   7   6
-      -->
       <svg viewBox="0 0 680 360" class="w-full" preserveAspectRatio="xMidYMid meet">
-        <!-- Emotion col headers -->
         <text x="195" y="30" text-anchor="middle" fill="#FCA5A5" font-size="11" font-weight="700" font-family="Inter">😤 Frustrated</text>
         <text x="300" y="30" text-anchor="middle" fill="#FDBA74" font-size="11" font-weight="700" font-family="Inter">😞 Disappointed</text>
         <text x="405" y="30" text-anchor="middle" fill="#6EE7B7" font-size="11" font-weight="700" font-family="Inter">🌟 Hopeful</text>
         <text x="510" y="30" text-anchor="middle" fill="#A5B4FC" font-size="11" font-weight="700" font-family="Inter">😊 Satisfied</text>
         <text x="615" y="30" text-anchor="middle" fill="#67E8F9" font-size="11" font-weight="700" font-family="Inter">💪 Confident</text>
-        <!-- Topic row labels -->
         <text x="155" y="79"  text-anchor="end" fill="#C7D2FE" font-size="11" font-weight="600" font-family="Inter">Work-life Balance</text>
         <text x="155" y="139" text-anchor="end" fill="#FCA5A5" font-size="11" font-weight="600" font-family="Inter">Workload</text>
         <text x="155" y="199" text-anchor="end" fill="#FDE68A" font-size="11" font-weight="600" font-family="Inter">Benefits</text>
         <text x="155" y="259" text-anchor="end" fill="#E9D5FF" font-size="11" font-weight="600" font-family="Inter">Career Dev.</text>
         <text x="155" y="319" text-anchor="end" fill="#A5F3FC" font-size="11" font-weight="600" font-family="Inter">Remote Work</text>
-        <!-- Alternating row backgrounds -->
         <rect x="160" y="50"  width="510" height="60" fill="rgba(255,255,255,.025)" rx="6"/>
         <rect x="160" y="110" width="510" height="60" fill="rgba(255,255,255,.012)" rx="6"/>
         <rect x="160" y="170" width="510" height="60" fill="rgba(255,255,255,.025)" rx="6"/>
         <rect x="160" y="230" width="510" height="60" fill="rgba(255,255,255,.012)" rx="6"/>
         <rect x="160" y="290" width="510" height="60" fill="rgba(255,255,255,.025)" rx="6"/>
-        <!-- Col dividers -->
         <line x1="247" y1="45" x2="247" y2="350" stroke="#1f2937" stroke-width="1"/>
         <line x1="352" y1="45" x2="352" y2="350" stroke="#1f2937" stroke-width="1"/>
         <line x1="457" y1="45" x2="457" y2="350" stroke="#1f2937" stroke-width="1"/>
         <line x1="562" y1="45" x2="562" y2="350" stroke="#1f2937" stroke-width="1"/>
-
-        <!-- WLB row: r = 18.2, 10.4, 15.6, 7.8, 5.2 -->
+        <!-- WLB -->
         <circle cx="195" cy="80"  r="18.2" fill="rgba(239,68,68,.65)"  stroke="rgba(239,68,68,.9)"  stroke-width="1.5"/>
         <circle cx="300" cy="80"  r="10.4" fill="rgba(249,115,22,.65)" stroke="rgba(249,115,22,.9)" stroke-width="1.5"/>
         <circle cx="405" cy="80"  r="15.6" fill="rgba(16,185,129,.65)" stroke="rgba(16,185,129,.9)" stroke-width="1.5"/>
         <circle cx="510" cy="80"  r="7.8"  fill="rgba(99,102,241,.65)" stroke="rgba(99,102,241,.9)" stroke-width="1.5"/>
         <circle cx="615" cy="80"  r="5.2"  fill="rgba(6,182,212,.55)"  stroke="rgba(6,182,212,.8)"  stroke-width="1"/>
-        <!-- Workload row: r = 23.4, 18.2, 5.2, 2.6, 2.6 -->
+        <!-- Workload -->
         <circle cx="195" cy="140" r="23.4" fill="rgba(239,68,68,.72)"  stroke="rgba(239,68,68,1)"   stroke-width="2.5"/>
         <circle cx="300" cy="140" r="18.2" fill="rgba(249,115,22,.65)" stroke="rgba(249,115,22,.9)" stroke-width="1.5"/>
         <circle cx="405" cy="140" r="5.2"  fill="rgba(16,185,129,.4)"  stroke="rgba(16,185,129,.6)" stroke-width="1"/>
         <circle cx="510" cy="140" r="2.6"  fill="rgba(99,102,241,.4)"  stroke="rgba(99,102,241,.6)" stroke-width="1"/>
         <circle cx="615" cy="140" r="2.6"  fill="rgba(6,182,212,.4)"   stroke="rgba(6,182,212,.6)"  stroke-width="1"/>
-        <!-- Benefits row: r = 13, 20.8, 13, 5.2, 5.2 -->
+        <!-- Benefits -->
         <circle cx="195" cy="200" r="13"   fill="rgba(239,68,68,.65)"  stroke="rgba(239,68,68,.9)"  stroke-width="1.5"/>
         <circle cx="300" cy="200" r="20.8" fill="rgba(249,115,22,.72)" stroke="rgba(249,115,22,1)"  stroke-width="2.5"/>
         <circle cx="405" cy="200" r="13"   fill="rgba(16,185,129,.65)" stroke="rgba(16,185,129,.9)" stroke-width="1.5"/>
         <circle cx="510" cy="200" r="5.2"  fill="rgba(99,102,241,.45)" stroke="rgba(99,102,241,.7)" stroke-width="1"/>
         <circle cx="615" cy="200" r="5.2"  fill="rgba(6,182,212,.45)"  stroke="rgba(6,182,212,.7)"  stroke-width="1"/>
-        <!-- Career Dev row: r = 10.4, 15.6, 20.8, 10.4, 13 -->
+        <!-- Career Dev -->
         <circle cx="195" cy="260" r="10.4" fill="rgba(239,68,68,.55)"  stroke="rgba(239,68,68,.8)"  stroke-width="1"/>
         <circle cx="300" cy="260" r="15.6" fill="rgba(249,115,22,.65)" stroke="rgba(249,115,22,.9)" stroke-width="1.5"/>
         <circle cx="405" cy="260" r="20.8" fill="rgba(16,185,129,.72)" stroke="rgba(16,185,129,1)"  stroke-width="2.5"/>
         <circle cx="510" cy="260" r="10.4" fill="rgba(99,102,241,.65)" stroke="rgba(99,102,241,.9)" stroke-width="1.5"/>
         <circle cx="615" cy="260" r="13"   fill="rgba(6,182,212,.65)"  stroke="rgba(6,182,212,.9)"  stroke-width="1.5"/>
-        <!-- Remote Work row: r = 7.8, 5.2, 23.4, 18.2, 15.6 -->
+        <!-- Remote Work -->
         <circle cx="195" cy="320" r="7.8"  fill="rgba(239,68,68,.55)"  stroke="rgba(239,68,68,.8)"  stroke-width="1"/>
         <circle cx="300" cy="320" r="5.2"  fill="rgba(249,115,22,.45)" stroke="rgba(249,115,22,.7)" stroke-width="1"/>
         <circle cx="405" cy="320" r="23.4" fill="rgba(16,185,129,.72)" stroke="rgba(16,185,129,1)"  stroke-width="2.5"/>
         <circle cx="510" cy="320" r="18.2" fill="rgba(99,102,241,.72)" stroke="rgba(99,102,241,1)"  stroke-width="2.5"/>
         <circle cx="615" cy="320" r="15.6" fill="rgba(6,182,212,.65)"  stroke="rgba(6,182,212,.9)"  stroke-width="1.5"/>
       </svg>
-      <!-- Legend -->
-      <div class="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
-        <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-full bg-gray-600 border border-gray-500"></div>Small = weak correlation</div>
-        <div class="flex items-center gap-1.5"><div class="w-5 h-5 rounded-full bg-gray-500 border-2 border-gray-300"></div>Large = strong correlation</div>
+      <div class="mt-3 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+        <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-full bg-gray-700 border border-gray-500"></div>Small = weak</div>
+        <div class="flex items-center gap-1.5"><div class="w-5 h-5 rounded-full bg-gray-600 border-2 border-gray-300"></div>Large = strong</div>
         <span class="text-gray-700">|</span>
-        <span>e.g. <span class="text-red-400 font-semibold">Workload → Frustrated</span> is the strongest link in the dataset</span>
+        <span>Key insight: <span class="text-red-400 font-semibold">Workload → Frustrated</span> is the strongest correlation</span>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════
        TAB 5 — ACTION PLAN
-  ══════════════════════════════════════════════ -->
+  ════════════════════════════════════════════════ -->
   <div id="tab-actions" class="tab-content">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-      <!-- Summary card -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div class="glass rounded-2xl p-5 fade-up">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <div class="text-white font-semibold text-sm">Plan Summary</div>
-            <div class="text-gray-500 text-xs">AI-generated · Based on 847 responses</div>
-          </div>
-          <div class="w-7 h-7 rounded-lg bg-emerald-600/30 flex items-center justify-center border border-emerald-600/40">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
+        <div class="flex items-center justify-between mb-4"><div><div class="text-white font-semibold text-sm">Plan Summary</div><div class="text-gray-500 text-xs">AI-generated · 847 responses</div></div><div class="w-6 h-6 rounded-lg bg-emerald-600/30 flex items-center justify-center border border-emerald-600/40"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div></div>
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between p-3 bg-red-950/40 rounded-xl border border-red-800/30"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500 pulse-dot"></div><span class="text-red-300 text-xs font-semibold">P1 — Critical</span></div><span class="text-gray-400 text-xs">&lt; 2 weeks</span></div>
+          <div class="flex items-center justify-between p-3 bg-amber-950/40 rounded-xl border border-amber-800/30"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-amber-300 text-xs font-semibold">P2 — High</span></div><span class="text-gray-400 text-xs">1 month</span></div>
+          <div class="flex items-center justify-between p-3 bg-emerald-950/40 rounded-xl border border-emerald-800/30"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-emerald-300 text-xs font-semibold">P3 — Medium</span></div><span class="text-gray-400 text-xs">3 months</span></div>
         </div>
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-3 bg-red-950/40 rounded-xl border border-red-800/30">
-            <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500 pulse-dot"></div><span class="text-red-300 text-xs font-semibold">P1 — Critical</span></div>
-            <span class="text-gray-400 text-xs">&lt; 2 weeks</span>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-amber-950/40 rounded-xl border border-amber-800/30">
-            <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-amber-300 text-xs font-semibold">P2 — High</span></div>
-            <span class="text-gray-400 text-xs">1 month</span>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-emerald-950/40 rounded-xl border border-emerald-800/30">
-            <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-emerald-300 text-xs font-semibold">P3 — Medium</span></div>
-            <span class="text-gray-400 text-xs">3 months</span>
-          </div>
-        </div>
-        <div class="mt-4 pt-4 border-t border-gray-800">
-          <div class="text-gray-500 text-xs mb-2 font-semibold uppercase tracking-wide">Departments Impacted</div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Customer Support</span>
-            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Finance</span>
-            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Engineering</span>
-            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Sales</span>
-            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">All Depts</span>
-          </div>
-        </div>
-        <div class="mt-4 pt-3 border-t border-gray-800 flex items-center justify-center gap-1.5">
-          <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 pulse-dot"></div>
-          <span class="text-gray-600 text-xs">Powered by GPT-4o</span>
-        </div>
+        <div class="mt-4 pt-3 border-t border-gray-800"><div class="text-gray-500 text-xs mb-2 font-semibold uppercase tracking-wide">Departments Impacted</div><div class="flex flex-wrap gap-1.5"><span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Customer Support</span><span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Finance</span><span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Engineering</span><span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">Sales</span><span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">All Depts</span></div></div>
+        <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 pulse-dot"></div><span class="text-gray-600 text-xs">Powered by GPT-4o</span></div>
       </div>
-
-      <!-- Action cards (2/3) -->
-      <div class="md:col-span-2 space-y-4">
-
-        <!-- Action 1 -->
-        <div class="action-card glass rounded-2xl p-5 border border-red-700/30 fade-up" style="animation-delay:0.08s">
-          <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-red-900/60 flex items-center justify-center flex-shrink-0 border border-red-700/50 text-xl">🔴</div>
-              <div>
-                <div class="text-red-300 font-bold text-base">P1 — Workload Audit & Redistribution</div>
-                <div class="text-gray-500 text-xs">Customer Support & Finance · Immediate action</div>
-              </div>
-            </div>
-            <span class="flex-shrink-0 text-xs bg-red-900/60 text-red-300 px-3 py-1.5 rounded-lg border border-red-700/50 font-semibold">&lt; 2 weeks</span>
-          </div>
-          <div class="text-gray-300 text-sm leading-relaxed mb-4">
-            Conduct an immediate capacity review in the Customer Support department. Redistribute task loads, set temporary workload caps, and initiate hiring for 2 additional headcounts. Address the <span class="text-red-400 font-semibold">−18 pt drop</span> before it becomes a retention crisis.
-          </div>
-          <div class="grid grid-cols-3 gap-3">
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-red-400 font-bold text-lg">261</div>
-              <div class="text-gray-500 text-xs">Workload mentions</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-orange-400 font-bold text-lg">43%</div>
-              <div class="text-gray-500 text-xs">Cust. Support score</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-emerald-400 font-bold text-lg">High</div>
-              <div class="text-gray-500 text-xs">Expected impact</div>
-            </div>
-          </div>
+      <div class="md:col-span-2 space-y-3">
+        <div class="action-card glass rounded-2xl p-5 border border-red-700/30 fade-up" style="animation-delay:.06s">
+          <div class="flex items-start justify-between gap-3 mb-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-red-900/60 flex items-center justify-center flex-shrink-0 border border-red-700/50 text-xl">🔴</div><div><div class="text-red-300 font-bold text-base">P1 — Workload Audit & Redistribution</div><div class="text-gray-500 text-xs">Customer Support & Finance · Immediate action</div></div></div><span class="flex-shrink-0 text-xs bg-red-900/60 text-red-300 px-3 py-1.5 rounded-lg border border-red-700/50 font-semibold">&lt; 2 weeks</span></div>
+          <div class="text-gray-300 text-sm leading-relaxed mb-4">Conduct an immediate capacity review in Customer Support. Redistribute task loads, set temporary workload caps, and initiate hiring for 2 additional headcounts. Address the <span class="text-red-400 font-semibold">−18 pt drop</span> before it becomes a retention crisis.</div>
+          <div class="grid grid-cols-3 gap-3"><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-red-400 font-bold text-lg">261</div><div class="text-gray-500 text-xs">Workload mentions</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-orange-400 font-bold text-lg">43%</div><div class="text-gray-500 text-xs">Dept score</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-emerald-400 font-bold text-lg">High</div><div class="text-gray-500 text-xs">Expected impact</div></div></div>
         </div>
-
-        <!-- Action 2 -->
-        <div class="action-card glass rounded-2xl p-5 border border-amber-700/30 fade-up" style="animation-delay:0.14s">
-          <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-900/60 flex items-center justify-center flex-shrink-0 border border-amber-700/50 text-xl">🟡</div>
-              <div>
-                <div class="text-amber-300 font-bold text-base">P2 — Career Compass Program</div>
-                <div class="text-gray-500 text-xs">Engineering & Sales · Growth framework</div>
-              </div>
-            </div>
-            <span class="flex-shrink-0 text-xs bg-amber-900/60 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-700/50 font-semibold">1 month</span>
-          </div>
-          <div class="text-gray-300 text-sm leading-relaxed mb-4">
-            Launch quarterly 1:1 career growth reviews with all employees. Define transparent promotion criteria at each level and allocate a dedicated L&D budget per person. Introduce an internal mentorship pairing program for mid-level employees.
-          </div>
-          <div class="grid grid-cols-3 gap-3">
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-purple-400 font-bold text-lg">176</div>
-              <div class="text-gray-500 text-xs">Career mentions</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-amber-400 font-bold text-lg">38%</div>
-              <div class="text-gray-500 text-xs">Disappointed score</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-emerald-400 font-bold text-lg">Medium</div>
-              <div class="text-gray-500 text-xs">Expected impact</div>
-            </div>
-          </div>
+        <div class="action-card glass rounded-2xl p-5 border border-amber-700/30 fade-up" style="animation-delay:.12s">
+          <div class="flex items-start justify-between gap-3 mb-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-amber-900/60 flex items-center justify-center flex-shrink-0 border border-amber-700/50 text-xl">🟡</div><div><div class="text-amber-300 font-bold text-base">P2 — Career Compass Program</div><div class="text-gray-500 text-xs">Engineering & Sales · Growth framework</div></div></div><span class="flex-shrink-0 text-xs bg-amber-900/60 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-700/50 font-semibold">1 month</span></div>
+          <div class="text-gray-300 text-sm leading-relaxed mb-4">Launch quarterly 1:1 career growth reviews with all employees. Define transparent promotion criteria and allocate dedicated L&D budget per person. Introduce an internal mentorship pairing program for mid-level employees.</div>
+          <div class="grid grid-cols-3 gap-3"><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-purple-400 font-bold text-lg">176</div><div class="text-gray-500 text-xs">Career mentions</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-amber-400 font-bold text-lg">38%</div><div class="text-gray-500 text-xs">Disappointed score</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-emerald-400 font-bold text-lg">Medium</div><div class="text-gray-500 text-xs">Expected impact</div></div></div>
         </div>
-
-        <!-- Action 3 -->
-        <div class="action-card glass rounded-2xl p-5 border border-emerald-700/30 fade-up" style="animation-delay:0.20s">
-          <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-900/60 flex items-center justify-center flex-shrink-0 border border-emerald-700/50 text-xl">🟢</div>
-              <div>
-                <div class="text-emerald-300 font-bold text-base">P3 — Benefits Redesign</div>
-                <div class="text-gray-500 text-xs">All Departments · Compensation & wellbeing</div>
-              </div>
-            </div>
-            <span class="flex-shrink-0 text-xs bg-emerald-900/60 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-700/50 font-semibold">3 months</span>
-          </div>
-          <div class="text-gray-300 text-sm leading-relaxed mb-4">
-            Expand healthcare coverage to include family members. Introduce a flexible work allowance (THB 3,000/month), mental health support fund, and annual wellness day. Survey employees quarterly on benefit satisfaction to iterate continuously.
-          </div>
-          <div class="grid grid-cols-3 gap-3">
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-amber-400 font-bold text-lg">208</div>
-              <div class="text-gray-500 text-xs">Benefits mentions</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-blue-400 font-bold text-lg">All</div>
-              <div class="text-gray-500 text-xs">8 departments</div>
-            </div>
-            <div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800">
-              <div class="text-emerald-400 font-bold text-lg">High</div>
-              <div class="text-gray-500 text-xs">Expected impact</div>
-            </div>
-          </div>
+        <div class="action-card glass rounded-2xl p-5 border border-emerald-700/30 fade-up" style="animation-delay:.18s">
+          <div class="flex items-start justify-between gap-3 mb-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-900/60 flex items-center justify-center flex-shrink-0 border border-emerald-700/50 text-xl">🟢</div><div><div class="text-emerald-300 font-bold text-base">P3 — Benefits Redesign</div><div class="text-gray-500 text-xs">All Departments · Compensation & wellbeing</div></div></div><span class="flex-shrink-0 text-xs bg-emerald-900/60 text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-700/50 font-semibold">3 months</span></div>
+          <div class="text-gray-300 text-sm leading-relaxed mb-4">Expand healthcare to cover family members. Introduce a flexible work allowance (THB 3,000/month), mental health fund, and annual wellness day. Survey quarterly on benefit satisfaction to iterate continuously.</div>
+          <div class="grid grid-cols-3 gap-3"><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-amber-400 font-bold text-lg">208</div><div class="text-gray-500 text-xs">Benefits mentions</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-blue-400 font-bold text-lg">All</div><div class="text-gray-500 text-xs">8 departments</div></div><div class="bg-gray-900/60 rounded-xl p-3 text-center border border-gray-800"><div class="text-emerald-400 font-bold text-lg">High</div><div class="text-gray-500 text-xs">Expected impact</div></div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════ FOOTER ══════ -->
-  <div class="text-center text-gray-700 text-xs pb-2">
-    PulseAI Employee Intelligence Platform · Demo v1.0 · All data is simulated for presentation purposes
+  <!-- FOOTER -->
+  <div class="text-center text-gray-700 text-xs pb-1">
+    PulseAI Employee Intelligence Platform · Demo v2.0 · All data is simulated for presentation purposes
   </div>
 
   <script>
     // ── Tab switching ──
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.nav-tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        const target = btn.dataset.tab;
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById(target).classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
       });
     });
 
-    // ── Semantic search dropdown ──
+    // ── Filter logic ──
+    const DEPT_LABELS = {
+      all:'All Departments', engineering:'Engineering', product:'Product',
+      marketing:'Marketing', sales:'Sales', hr:'HR', finance:'Finance',
+      'customer-support':'Customer Support', legal:'Legal'
+    };
+    const DATE_LABELS = {
+      '6m':'Last 6 months','3m':'Last 3 months','1m':'Last 30 days','1y':'Last 12 months','custom':'Custom Range'
+    };
+    const CYCLE_LABELS = {
+      current:'Nov 2024 – Apr 2025', prev:'May 2024 – Oct 2024', all:'All Cycles'
+    };
+
+    function applyFilters() {
+      const dept  = document.getElementById('deptFilter').value;
+      const date  = document.getElementById('dateFilter').value;
+      const cycle = document.getElementById('cycleFilter').value;
+      const type  = document.getElementById('typeFilter').value;
+      const cmp   = document.getElementById('compareFilter').value;
+
+      // Active chips
+      const chips = [];
+      if (dept  !== 'all')     chips.push(makeChip(`Dept: ${DEPT_LABELS[dept]}`,  "document.getElementById('deptFilter').value='all';applyFilters()"));
+      if (date  !== '6m')      chips.push(makeChip(`Range: ${DATE_LABELS[date]}`,  "document.getElementById('dateFilter').value='6m';applyFilters()"));
+      if (cycle !== 'current') chips.push(makeChip(`Cycle: ${CYCLE_LABELS[cycle]}`,"document.getElementById('cycleFilter').value='current';applyFilters()"));
+      if (type  !== 'all')     chips.push(makeChip(type==='open'?'Open-ended':'Rating Scale', "document.getElementById('typeFilter').value='all';applyFilters()"));
+      if (cmp   !== 'none')    chips.push(makeChip(`vs ${cmp==='prev-cycle'?'Prev Cycle':cmp==='prev-year'?'Last Year':'Benchmark'}`, "document.getElementById('compareFilter').value='none';applyFilters()"));
+
+      document.getElementById('activeFilters').innerHTML = chips.join('');
+
+      // Heatmap highlight
+      document.querySelectorAll('.dept-row').forEach(row => {
+        row.classList.toggle('highlighted', dept !== 'all' && row.dataset.dept === dept);
+      });
+
+      // Update subtitles
+      const cycleLabel = CYCLE_LABELS[cycle];
+      const dateLabel  = DATE_LABELS[date];
+      const deptLabel  = dept === 'all' ? 'All Departments' : DEPT_LABELS[dept];
+
+      document.getElementById('sentimentSubtitle').textContent = `${deptLabel} · ${dateLabel}`;
+      document.getElementById('trendSubtitle').textContent     = `${dateLabel} · ${cycleLabel}`;
+      if (document.getElementById('overviewFilterLabel'))
+        document.getElementById('overviewFilterLabel').textContent = dept !== 'all' ? `Viewing: ${DEPT_LABELS[dept]}` : '';
+
+      showFlash('Updated ✓');
+    }
+
+    function makeChip(label, onclick) {
+      return `<span class="filter-chip">${label} <button onclick="${onclick}">×</button></span>`;
+    }
+
+    function resetFilters() {
+      ['deptFilter','dateFilter','cycleFilter','typeFilter','compareFilter'].forEach(id => {
+        document.getElementById(id).selectedIndex = 0;
+      });
+      applyFilters();
+    }
+
+    function showFlash(msg) {
+      const el = document.getElementById('updateFlash');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), 1800);
+    }
+
+    // ── Search dropdown ──
     const searchInput = document.getElementById('semanticSearch');
-    const dropdown = document.getElementById('searchDropdown');
+    const dropdown    = document.getElementById('searchDropdown');
     searchInput.addEventListener('focus', () => dropdown.classList.remove('hidden'));
-    searchInput.addEventListener('blur', () => setTimeout(() => dropdown.classList.add('hidden'), 200));
+    searchInput.addEventListener('blur',  () => setTimeout(() => dropdown.classList.add('hidden'), 200));
     document.querySelectorAll('.suggestion-pill').forEach(el => {
       el.addEventListener('mousedown', e => {
         e.preventDefault();
-        searchInput.value = el.textContent.trim().replace(/^● /, '');
+        searchInput.value = el.textContent.trim().replace(/^● /,'');
         dropdown.classList.add('hidden');
+        showFlash('Searching...');
+        setTimeout(() => showFlash('3 results found'), 900);
       });
     });
 
     // ── Verbatim filter ──
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    document.querySelectorAll('.vfilter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        btn.closest('div').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.closest('div').querySelectorAll('.vfilter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const f = btn.dataset.filter;
         document.querySelectorAll('#verbatimList [data-tag]').forEach(item => {
@@ -952,6 +735,5 @@
       });
     });
   </script>
-
 </body>
 </html>
