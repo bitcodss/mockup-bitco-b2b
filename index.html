@@ -44,6 +44,36 @@
       from { transform: scaleX(0); }
       to   { transform: scaleX(1); }
     }
+
+    .search-wrap:focus-within { box-shadow: 0 0 0 3px rgba(99,102,241,0.35); border-color: rgba(99,102,241,0.6); }
+    .search-wrap { transition: box-shadow 0.25s, border-color 0.25s; }
+
+    .suggestion-pill { transition: background 0.15s; cursor: pointer; }
+    .suggestion-pill:hover { background: rgba(99,102,241,0.25); }
+
+    .treemap-cell { transition: opacity 0.18s, filter 0.18s; cursor: pointer; }
+    .treemap-cell:hover { opacity: 0.82; filter: brightness(1.18); }
+
+    .emotion-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .emotion-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+
+    .verbatim-item { transition: background 0.15s; }
+    .verbatim-item:hover { background: rgba(255,255,255,0.03); }
+
+    .filter-btn { transition: all 0.15s; cursor: pointer; }
+    .filter-btn.active { background: rgba(99,102,241,0.3); border-color: rgba(99,102,241,0.6); color: #a5b4fc; }
+
+    .action-card { transition: transform 0.2s, border-color 0.2s; }
+    .action-card:hover { transform: translateX(4px); }
+
+    .section-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 20px 0 16px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent);
+    }
   </style>
 </head>
 <body class="min-h-screen p-4 lg:p-5">
@@ -102,6 +132,49 @@
       <div class="mt-1 inline-flex items-center gap-1.5 bg-emerald-900/40 text-emerald-400 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30">
         <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></div>
         Live · Updated 2h ago
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SEMANTIC SEARCH ══════════ -->
+  <div class="glass rounded-2xl px-5 py-3 mb-4 fade-up" style="animation-delay:0.04s">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <span class="text-indigo-400 text-xs font-semibold uppercase tracking-wider">Semantic Search</span>
+      </div>
+      <div class="relative flex-1 search-wrap rounded-xl border border-gray-700/60 bg-gray-900/60">
+        <input id="semanticSearch" type="text" placeholder='Search by meaning... e.g. "พนักงานรู้สึกหมดไฟ" or "want better benefits"'
+          class="w-full bg-transparent text-gray-200 text-sm px-4 py-2.5 outline-none placeholder-gray-600 rounded-xl" autocomplete="off"/>
+        <div id="searchDropdown" class="hidden absolute z-20 top-full mt-1 left-0 right-0 glass rounded-xl border border-gray-700/50 p-2 shadow-2xl">
+          <div class="text-gray-500 text-xs px-2 mb-2 font-semibold uppercase tracking-wide">Suggested Searches</div>
+          <div class="space-y-1">
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2">
+              <span class="text-red-400">●</span> พนักงานรู้สึกหมดไฟจากงานหนัก
+            </div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2">
+              <span class="text-amber-400">●</span> ต้องการความก้าวหน้าในสายอาชีพ
+            </div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2">
+              <span class="text-emerald-400">●</span> ความพึงพอใจต่อวัฒนธรรมองค์กร
+            </div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2">
+              <span class="text-indigo-400">●</span> Employees unhappy with compensation and benefits
+            </div>
+            <div class="suggestion-pill px-3 py-1.5 rounded-lg text-gray-300 text-sm flex items-center gap-2">
+              <span class="text-cyan-400">●</span> Remote work flexibility requests
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-gray-800 text-gray-600 text-xs px-2">
+            AI matches responses by semantic meaning, not exact keywords
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-2 flex-shrink-0">
+        <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1.5 rounded-lg border border-gray-700/50">847 responses indexed</span>
+        <span class="text-xs bg-indigo-900/50 text-indigo-300 px-2.5 py-1.5 rounded-lg border border-indigo-700/40">Vector DB</span>
       </div>
     </div>
   </div>
@@ -608,10 +681,501 @@
     </div>
   </div>
 
+  <!-- ══════════ SECTION DIVIDER ══════════ -->
+  <div class="section-divider mt-6">
+    <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest px-2">Advanced AI Analysis</span>
+  </div>
+
+  <!-- ══════════ 360° EMOTION ANALYSIS ══════════ -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+
+    <!-- Radar Chart (2/5) -->
+    <div class="glass rounded-2xl p-5 md:col-span-2 fade-up" style="animation-delay:0.36s">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <div class="text-white font-semibold text-sm">360° Emotion Radar</div>
+          <div class="text-gray-500 text-xs">Multi-dimensional sentiment · NLP classified</div>
+        </div>
+        <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-lg border border-purple-700/40">Deep Analysis</span>
+      </div>
+      <!--
+        Center (160,160) maxR=120
+        Angles CW from top: Frustrated=-90°, Hopeful=-30°, Satisfied=30°, Disappointed=90°, Confident=150°, Anxious=210°
+        Values: Frustrated=45%, Hopeful=62%, Satisfied=52%, Disappointed=38%, Confident=44%, Anxious=28%
+        Data pts:
+          Frustrated  (0,-1)*54      = (160, 106)
+          Hopeful     (.866,-.5)*74.4= (224.4, 122.8)
+          Satisfied   (.866,.5)*62.4 = (214.1, 191.2)
+          Disappointed(0,1)*45.6     = (160, 205.6)
+          Confident   (-.866,.5)*52.8= (114.3, 186.4)
+          Anxious     (-.866,-.5)*33.6=(130.9,143.2)
+        Grid hexagon 100%: "160,40 263.92,100 263.92,220 160,280 56.08,220 56.08,100"
+        Grid hexagon 75%:  "160,70 237.94,115 237.94,205 160,250 82.06,205 82.06,115"
+        Grid hexagon 50%:  "160,100 211.96,130 211.96,190 160,220 108.04,190 108.04,130"
+        Grid hexagon 25%:  "160,130 185.98,145 185.98,175 160,190 134.02,175 134.02,145"
+      -->
+      <svg viewBox="0 0 320 320" class="w-full max-w-xs mx-auto">
+        <defs>
+          <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6366F1;stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:0.3"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid rings -->
+        <polygon points="160,130 185.98,145 185.98,175 160,190 134.02,175 134.02,145" fill="none" stroke="#1f2937" stroke-width="1"/>
+        <polygon points="160,100 211.96,130 211.96,190 160,220 108.04,190 108.04,130" fill="none" stroke="#1f2937" stroke-width="1"/>
+        <polygon points="160,70 237.94,115 237.94,205 160,250 82.06,205 82.06,115" fill="none" stroke="#1f2937" stroke-width="1"/>
+        <polygon points="160,40 263.92,100 263.92,220 160,280 56.08,220 56.08,100" fill="none" stroke="#374151" stroke-width="1"/>
+        <!-- Axis lines -->
+        <line x1="160" y1="160" x2="160" y2="40" stroke="#374151" stroke-width="1"/>
+        <line x1="160" y1="160" x2="263.92" y2="100" stroke="#374151" stroke-width="1"/>
+        <line x1="160" y1="160" x2="263.92" y2="220" stroke="#374151" stroke-width="1"/>
+        <line x1="160" y1="160" x2="160" y2="280" stroke="#374151" stroke-width="1"/>
+        <line x1="160" y1="160" x2="56.08" y2="220" stroke="#374151" stroke-width="1"/>
+        <line x1="160" y1="160" x2="56.08" y2="100" stroke="#374151" stroke-width="1"/>
+        <!-- Data polygon -->
+        <polygon points="160,106 224.4,122.8 214.1,191.2 160,205.6 114.3,186.4 130.9,143.2"
+                 fill="url(#radarFill)" stroke="#6366F1" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Data points -->
+        <circle cx="160"   cy="106"   r="5" fill="#EF4444" stroke="#030712" stroke-width="1.5"/>
+        <circle cx="224.4" cy="122.8" r="5" fill="#10B981" stroke="#030712" stroke-width="1.5"/>
+        <circle cx="214.1" cy="191.2" r="5" fill="#6366F1" stroke="#030712" stroke-width="1.5"/>
+        <circle cx="160"   cy="205.6" r="5" fill="#F97316" stroke="#030712" stroke-width="1.5"/>
+        <circle cx="114.3" cy="186.4" r="5" fill="#06B6D4" stroke="#030712" stroke-width="1.5"/>
+        <circle cx="130.9" cy="143.2" r="5" fill="#A855F7" stroke="#030712" stroke-width="1.5"/>
+        <!-- Labels -->
+        <text x="160" y="28" text-anchor="middle" fill="#FCA5A5" font-size="10" font-weight="600" font-family="Inter">Frustrated 45%</text>
+        <text x="280" y="98" text-anchor="start"  fill="#6EE7B7" font-size="10" font-weight="600" font-family="Inter">Hopeful 62%</text>
+        <text x="280" y="228" text-anchor="start" fill="#A5B4FC" font-size="10" font-weight="600" font-family="Inter">Satisfied 52%</text>
+        <text x="160" y="298" text-anchor="middle" fill="#FDBA74" font-size="10" font-weight="600" font-family="Inter">Disappointed 38%</text>
+        <text x="40" y="228" text-anchor="end"   fill="#67E8F9" font-size="10" font-weight="600" font-family="Inter">Confident 44%</text>
+        <text x="40" y="98" text-anchor="end"    fill="#D8B4FE" font-size="10" font-weight="600" font-family="Inter">Anxious 28%</text>
+        <!-- Grid % labels -->
+        <text x="162" y="189" fill="#4B5563" font-size="8" font-family="Inter">25%</text>
+        <text x="162" y="219" fill="#4B5563" font-size="8" font-family="Inter">50%</text>
+        <text x="162" y="249" fill="#4B5563" font-size="8" font-family="Inter">75%</text>
+      </svg>
+    </div>
+
+    <!-- Emotion Cards (3/5) -->
+    <div class="glass rounded-2xl p-5 md:col-span-3 fade-up" style="animation-delay:0.40s">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="text-white font-semibold text-sm">Emotion Breakdown</div>
+          <div class="text-gray-500 text-xs">Classified from 847 open-ended responses · GPT-4o</div>
+        </div>
+        <span class="text-xs bg-rose-900/50 text-rose-300 px-2 py-1 rounded-lg border border-rose-700/40">6 Emotions</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <!-- Frustrated -->
+        <div class="emotion-card glass rounded-xl p-3 border border-red-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">😤</span>
+            <span class="text-red-400 font-black text-lg">45%</span>
+          </div>
+          <div class="text-red-300 font-semibold text-xs mb-1">Frustrated</div>
+          <div class="h-1 bg-red-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-red-500 rounded-full bar-grow" style="width:45%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Heavy workload pressure</div>
+        </div>
+        <!-- Hopeful -->
+        <div class="emotion-card glass rounded-xl p-3 border border-emerald-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">🌟</span>
+            <span class="text-emerald-400 font-black text-lg">62%</span>
+          </div>
+          <div class="text-emerald-300 font-semibold text-xs mb-1">Hopeful</div>
+          <div class="h-1 bg-emerald-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-emerald-500 rounded-full bar-grow" style="width:62%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Optimistic about change</div>
+        </div>
+        <!-- Satisfied -->
+        <div class="emotion-card glass rounded-xl p-3 border border-indigo-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">😊</span>
+            <span class="text-indigo-400 font-black text-lg">52%</span>
+          </div>
+          <div class="text-indigo-300 font-semibold text-xs mb-1">Satisfied</div>
+          <div class="h-1 bg-indigo-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-indigo-500 rounded-full bar-grow" style="width:52%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Team culture & peers</div>
+        </div>
+        <!-- Disappointed -->
+        <div class="emotion-card glass rounded-xl p-3 border border-orange-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">😞</span>
+            <span class="text-orange-400 font-black text-lg">38%</span>
+          </div>
+          <div class="text-orange-300 font-semibold text-xs mb-1">Disappointed</div>
+          <div class="h-1 bg-orange-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-orange-500 rounded-full bar-grow" style="width:38%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Benefits & compensation gap</div>
+        </div>
+        <!-- Confident -->
+        <div class="emotion-card glass rounded-xl p-3 border border-cyan-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">💪</span>
+            <span class="text-cyan-400 font-black text-lg">44%</span>
+          </div>
+          <div class="text-cyan-300 font-semibold text-xs mb-1">Confident</div>
+          <div class="h-1 bg-cyan-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-cyan-500 rounded-full bar-grow" style="width:44%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Company direction & stability</div>
+        </div>
+        <!-- Anxious -->
+        <div class="emotion-card glass rounded-xl p-3 border border-purple-800/30">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xl">😰</span>
+            <span class="text-purple-400 font-black text-lg">28%</span>
+          </div>
+          <div class="text-purple-300 font-semibold text-xs mb-1">Anxious</div>
+          <div class="h-1 bg-purple-900/40 rounded-full overflow-hidden mb-1.5">
+            <div class="h-full bg-purple-500 rounded-full bar-grow" style="width:28%"></div>
+          </div>
+          <div class="text-gray-500 text-xs">Workload sustainability</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-800 text-gray-600 text-xs text-center">
+        * Emotions are non-exclusive — one response can express multiple emotions simultaneously
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TREEMAP + VERBATIM ══════════ -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+    <!-- Topic Treemap (2/3) -->
+    <div class="glass rounded-2xl p-5 md:col-span-2 fade-up" style="animation-delay:0.44s">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="text-white font-semibold text-sm">AI Topic Clustering — Treemap</div>
+          <div class="text-gray-500 text-xs">Block size = mention frequency · Hover to filter verbatim</div>
+        </div>
+        <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-1 rounded-lg border border-amber-700/40">10 Clusters</span>
+      </div>
+      <!--
+        viewBox 558×222  (2px gaps between cells)
+        Row 1 h=84:  Work-life(0,303) | Workload(305,253)
+        Row 2 h=70:  Benefits(0,219) | Career(221,185) | Remote(408,150)
+        Row 3 h=62:  Team(0,143) | Leadership(145,127) | Communication(274,110) | Recognition(386,94) | Training(482,76)
+      -->
+      <svg viewBox="0 0 558 222" class="w-full rounded-xl overflow-hidden" style="display:block">
+        <!-- Row 1 -->
+        <rect class="treemap-cell" x="0"   y="0" width="303" height="84" fill="#4338CA" rx="6" data-topic="worklife"/>
+        <text x="151"  y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Work-life Balance</text>
+        <text x="151"  y="54" text-anchor="middle" fill="#C7D2FE" font-size="11" font-family="Inter">312 mentions</text>
+        <text x="151"  y="70" text-anchor="middle" fill="#A5B4FC" font-size="10" font-family="Inter">#1 Topic</text>
+
+        <rect class="treemap-cell" x="305" y="0" width="253" height="84" fill="#991B1B" rx="6" data-topic="workload"/>
+        <text x="431"  y="36" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Inter">Workload</text>
+        <text x="431"  y="54" text-anchor="middle" fill="#FECACA" font-size="11" font-family="Inter">261 mentions</text>
+        <text x="431"  y="70" text-anchor="middle" fill="#FCA5A5" font-size="10" font-family="Inter">⚠ High Risk</text>
+
+        <!-- Row 2 -->
+        <rect class="treemap-cell" x="0"   y="86" width="219" height="70" fill="#92400E" rx="6" data-topic="benefits"/>
+        <text x="109"  y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">สวัสดิการ / Benefits</text>
+        <text x="109"  y="138" text-anchor="middle" fill="#FDE68A" font-size="10" font-family="Inter">208 mentions</text>
+
+        <rect class="treemap-cell" x="221" y="86" width="185" height="70" fill="#6B21A8" rx="6" data-topic="career"/>
+        <text x="313"  y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Career Dev.</text>
+        <text x="313"  y="138" text-anchor="middle" fill="#E9D5FF" font-size="10" font-family="Inter">176 mentions</text>
+
+        <rect class="treemap-cell" x="408" y="86" width="150" height="70" fill="#164E63" rx="6" data-topic="remote"/>
+        <text x="483"  y="120" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Inter">Remote Work</text>
+        <text x="483"  y="138" text-anchor="middle" fill="#A5F3FC" font-size="10" font-family="Inter">143 mentions</text>
+
+        <!-- Row 3 -->
+        <rect class="treemap-cell" x="0"   y="158" width="143" height="62" fill="#064E3B" rx="6" data-topic="culture"/>
+        <text x="71"   y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Team Culture</text>
+        <text x="71"   y="202" text-anchor="middle" fill="#A7F3D0" font-size="9" font-family="Inter">98</text>
+
+        <rect class="treemap-cell" x="145" y="158" width="127" height="62" fill="#1E3A5F" rx="6" data-topic="leadership"/>
+        <text x="208"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Leadership</text>
+        <text x="208"  y="202" text-anchor="middle" fill="#BAE6FD" font-size="9" font-family="Inter">87</text>
+
+        <rect class="treemap-cell" x="274" y="158" width="110" height="62" fill="#4A044E" rx="6" data-topic="comms"/>
+        <text x="329"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Communication</text>
+        <text x="329"  y="202" text-anchor="middle" fill="#F5D0FE" font-size="9" font-family="Inter">76</text>
+
+        <rect class="treemap-cell" x="386" y="158" width="94"  height="62" fill="#134E4A" rx="6" data-topic="recognition"/>
+        <text x="433"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Recognition</text>
+        <text x="433"  y="202" text-anchor="middle" fill="#99F6E4" font-size="9" font-family="Inter">65</text>
+
+        <rect class="treemap-cell" x="482" y="158" width="76"  height="62" fill="#431407" rx="6" data-topic="training"/>
+        <text x="520"  y="186" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="Inter">Training</text>
+        <text x="520"  y="202" text-anchor="middle" fill="#FED7AA" font-size="9" font-family="Inter">54</text>
+      </svg>
+    </div>
+
+    <!-- Interactive Verbatim List (1/3) -->
+    <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.48s">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <div class="text-white font-semibold text-sm">Employee Verbatim</div>
+          <div class="text-gray-500 text-xs">Real responses · AI tagged</div>
+        </div>
+      </div>
+      <!-- Filter buttons -->
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        <button class="filter-btn active text-xs px-2.5 py-1 rounded-lg border border-gray-700/50 bg-gray-800/60 text-gray-300" data-filter="all">All</button>
+        <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-red-800/50 bg-red-900/30 text-red-300" data-filter="urgent">Urgent</button>
+        <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-blue-800/50 bg-blue-900/30 text-blue-300" data-filter="constructive">Constructive</button>
+        <button class="filter-btn text-xs px-2.5 py-1 rounded-lg border border-emerald-800/50 bg-emerald-900/30 text-emerald-300" data-filter="positive">Positive</button>
+      </div>
+      <!-- Verbatim items -->
+      <div class="space-y-2.5" id="verbatimList">
+        <div class="verbatim-item rounded-xl p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent">
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span>
+            <span class="text-gray-500 text-xs">Customer Support</span>
+          </div>
+          <div class="text-gray-300 text-xs leading-relaxed">"งานเพิ่มขึ้น 3 เท่าในปีนี้ แต่ทีมไม่เพิ่มตาม พวกเราเริ่มหมดไฟกันทั้งแผนก"</div>
+          <div class="mt-1.5 flex gap-1">
+            <span class="text-xs text-orange-400 bg-orange-900/30 px-1.5 py-0.5 rounded">Workload</span>
+            <span class="text-xs text-red-400 bg-red-900/30 px-1.5 py-0.5 rounded">Burnout</span>
+          </div>
+        </div>
+        <div class="verbatim-item rounded-xl p-3 bg-blue-950/30 border border-blue-800/30" data-tag="constructive">
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <span class="text-xs bg-blue-800/60 text-blue-300 px-2 py-0.5 rounded-md font-semibold">[Constructive]</span>
+            <span class="text-gray-500 text-xs">Engineering</span>
+          </div>
+          <div class="text-gray-300 text-xs leading-relaxed">"อยากให้มี work-from-home สัปดาห์ละ 2 วัน จะช่วย work-life balance ได้มาก"</div>
+          <div class="mt-1.5 flex gap-1">
+            <span class="text-xs text-cyan-400 bg-cyan-900/30 px-1.5 py-0.5 rounded">Remote Work</span>
+            <span class="text-xs text-indigo-400 bg-indigo-900/30 px-1.5 py-0.5 rounded">WLB</span>
+          </div>
+        </div>
+        <div class="verbatim-item rounded-xl p-3 bg-emerald-950/30 border border-emerald-800/30" data-tag="positive">
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <span class="text-xs bg-emerald-800/60 text-emerald-300 px-2 py-0.5 rounded-md font-semibold">[Positive]</span>
+            <span class="text-gray-500 text-xs">Product</span>
+          </div>
+          <div class="text-gray-300 text-xs leading-relaxed">"ทีมและวัฒนธรรมองค์กรดีมาก แต่ career path ยังไม่ชัดเจนสำหรับ senior roles"</div>
+          <div class="mt-1.5 flex gap-1">
+            <span class="text-xs text-emerald-400 bg-emerald-900/30 px-1.5 py-0.5 rounded">Culture</span>
+            <span class="text-xs text-purple-400 bg-purple-900/30 px-1.5 py-0.5 rounded">Career</span>
+          </div>
+        </div>
+        <div class="verbatim-item rounded-xl p-3 bg-red-950/30 border border-red-800/30" data-tag="urgent">
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <span class="text-xs bg-red-800/60 text-red-300 px-2 py-0.5 rounded-md font-semibold">[Urgent]</span>
+            <span class="text-gray-500 text-xs">Finance</span>
+          </div>
+          <div class="text-gray-300 text-xs leading-relaxed">"สวัสดิการรักษาพยาบาลครอบคลุมน้อยเกินไป ไม่รวมครอบครัว ควรปรับปรุง"</div>
+          <div class="mt-1.5 flex gap-1">
+            <span class="text-xs text-amber-400 bg-amber-900/30 px-1.5 py-0.5 rounded">Benefits</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 text-center text-gray-600 text-xs">Showing 4 of 847 responses</div>
+    </div>
+  </div>
+
+  <!-- ══════════ CORRELATION MAP + ACTION PLAN ══════════ -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+    <!-- Correlation Map -->
+    <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.52s">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="text-white font-semibold text-sm">Topic × Emotion Correlation</div>
+          <div class="text-gray-500 text-xs">Bubble size = correlation strength · AI computed</div>
+        </div>
+        <span class="text-xs bg-cyan-900/50 text-cyan-300 px-2 py-1 rounded-lg border border-cyan-700/40">Correlation Map</span>
+      </div>
+      <!--
+        viewBox 580×290
+        Cols (emotions) X centers: 175, 265, 355, 445, 535
+        Rows (topics)  Y centers: 65, 115, 165, 215, 265
+        Bubble radius = strength/10 * 22  (max 22px)
+        Colors: Frustrated=#EF4444, Disappointed=#F97316, Hopeful=#10B981, Satisfied=#6366F1, Confident=#06B6D4
+        Strength matrix:
+               Fr  Di  Ho  Sa  Co
+        WLB:    7   4   6   3   2
+        WL:     9   7   2   1   1
+        Ben:    5   8   5   2   2
+        CD:     4   6   8   4   5
+        RW:     3   2   9   7   6
+      -->
+      <svg viewBox="0 0 580 290" class="w-full">
+        <!-- Column header labels -->
+        <text x="175" y="20" text-anchor="middle" fill="#FCA5A5" font-size="9"  font-weight="600" font-family="Inter">Frustrated</text>
+        <text x="265" y="20" text-anchor="middle" fill="#FDBA74" font-size="9"  font-weight="600" font-family="Inter">Disappointed</text>
+        <text x="355" y="20" text-anchor="middle" fill="#6EE7B7" font-size="9"  font-weight="600" font-family="Inter">Hopeful</text>
+        <text x="445" y="20" text-anchor="middle" fill="#A5B4FC" font-size="9"  font-weight="600" font-family="Inter">Satisfied</text>
+        <text x="535" y="20" text-anchor="middle" fill="#67E8F9" font-size="9"  font-weight="600" font-family="Inter">Confident</text>
+
+        <!-- Row header labels -->
+        <text x="125" y="69"  text-anchor="end" fill="#C7D2FE" font-size="9" font-family="Inter">Work-life</text>
+        <text x="125" y="119" text-anchor="end" fill="#FCA5A5" font-size="9" font-family="Inter">Workload</text>
+        <text x="125" y="169" text-anchor="end" fill="#FDE68A" font-size="9" font-family="Inter">Benefits</text>
+        <text x="125" y="219" text-anchor="end" fill="#E9D5FF" font-size="9" font-family="Inter">Career Dev.</text>
+        <text x="125" y="269" text-anchor="end" fill="#A5F3FC" font-size="9" font-family="Inter">Remote Work</text>
+
+        <!-- Grid background cells -->
+        <rect x="133" y="40"  width="438" height="50" fill="rgba(255,255,255,0.02)" rx="4"/>
+        <rect x="133" y="90"  width="438" height="50" fill="rgba(255,255,255,0.01)" rx="4"/>
+        <rect x="133" y="140" width="438" height="50" fill="rgba(255,255,255,0.02)" rx="4"/>
+        <rect x="133" y="190" width="438" height="50" fill="rgba(255,255,255,0.01)" rx="4"/>
+        <rect x="133" y="240" width="438" height="50" fill="rgba(255,255,255,0.02)" rx="4"/>
+
+        <!-- WLB row: r = 15.4, 8.8, 13.2, 6.6, 4.4 -->
+        <circle cx="175" cy="65"  r="15.4" fill="rgba(239,68,68,0.65)"   stroke="rgba(239,68,68,0.9)"   stroke-width="1.5"/>
+        <circle cx="265" cy="65"  r="8.8"  fill="rgba(249,115,22,0.65)"  stroke="rgba(249,115,22,0.9)"  stroke-width="1.5"/>
+        <circle cx="355" cy="65"  r="13.2" fill="rgba(16,185,129,0.65)"  stroke="rgba(16,185,129,0.9)"  stroke-width="1.5"/>
+        <circle cx="445" cy="65"  r="6.6"  fill="rgba(99,102,241,0.65)"  stroke="rgba(99,102,241,0.9)"  stroke-width="1.5"/>
+        <circle cx="535" cy="65"  r="4.4"  fill="rgba(6,182,212,0.65)"   stroke="rgba(6,182,212,0.9)"   stroke-width="1.5"/>
+
+        <!-- Workload row: r = 19.8, 15.4, 4.4, 2.2, 2.2 -->
+        <circle cx="175" cy="115" r="19.8" fill="rgba(239,68,68,0.7)"    stroke="rgba(239,68,68,1)"     stroke-width="2"/>
+        <circle cx="265" cy="115" r="15.4" fill="rgba(249,115,22,0.65)"  stroke="rgba(249,115,22,0.9)"  stroke-width="1.5"/>
+        <circle cx="355" cy="115" r="4.4"  fill="rgba(16,185,129,0.45)"  stroke="rgba(16,185,129,0.7)"  stroke-width="1"/>
+        <circle cx="445" cy="115" r="2.2"  fill="rgba(99,102,241,0.45)"  stroke="rgba(99,102,241,0.7)"  stroke-width="1"/>
+        <circle cx="535" cy="115" r="2.2"  fill="rgba(6,182,212,0.45)"   stroke="rgba(6,182,212,0.7)"   stroke-width="1"/>
+
+        <!-- Benefits row: r = 11.0, 17.6, 11.0, 4.4, 4.4 -->
+        <circle cx="175" cy="165" r="11.0" fill="rgba(239,68,68,0.65)"   stroke="rgba(239,68,68,0.9)"   stroke-width="1.5"/>
+        <circle cx="265" cy="165" r="17.6" fill="rgba(249,115,22,0.7)"   stroke="rgba(249,115,22,1)"    stroke-width="2"/>
+        <circle cx="355" cy="165" r="11.0" fill="rgba(16,185,129,0.65)"  stroke="rgba(16,185,129,0.9)"  stroke-width="1.5"/>
+        <circle cx="445" cy="165" r="4.4"  fill="rgba(99,102,241,0.45)"  stroke="rgba(99,102,241,0.7)"  stroke-width="1"/>
+        <circle cx="535" cy="165" r="4.4"  fill="rgba(6,182,212,0.45)"   stroke="rgba(6,182,212,0.7)"   stroke-width="1"/>
+
+        <!-- Career Dev row: r = 8.8, 13.2, 17.6, 8.8, 11.0 -->
+        <circle cx="175" cy="215" r="8.8"  fill="rgba(239,68,68,0.55)"   stroke="rgba(239,68,68,0.8)"   stroke-width="1"/>
+        <circle cx="265" cy="215" r="13.2" fill="rgba(249,115,22,0.65)"  stroke="rgba(249,115,22,0.9)"  stroke-width="1.5"/>
+        <circle cx="355" cy="215" r="17.6" fill="rgba(16,185,129,0.7)"   stroke="rgba(16,185,129,1)"    stroke-width="2"/>
+        <circle cx="445" cy="215" r="8.8"  fill="rgba(99,102,241,0.65)"  stroke="rgba(99,102,241,0.9)"  stroke-width="1.5"/>
+        <circle cx="535" cy="215" r="11.0" fill="rgba(6,182,212,0.65)"   stroke="rgba(6,182,212,0.9)"   stroke-width="1.5"/>
+
+        <!-- Remote Work row: r = 6.6, 4.4, 19.8, 15.4, 13.2 -->
+        <circle cx="175" cy="265" r="6.6"  fill="rgba(239,68,68,0.55)"   stroke="rgba(239,68,68,0.8)"   stroke-width="1"/>
+        <circle cx="265" cy="265" r="4.4"  fill="rgba(249,115,22,0.45)"  stroke="rgba(249,115,22,0.7)"  stroke-width="1"/>
+        <circle cx="355" cy="265" r="19.8" fill="rgba(16,185,129,0.7)"   stroke="rgba(16,185,129,1)"    stroke-width="2"/>
+        <circle cx="445" cy="265" r="15.4" fill="rgba(99,102,241,0.7)"   stroke="rgba(99,102,241,1)"    stroke-width="2"/>
+        <circle cx="535" cy="265" r="13.2" fill="rgba(6,182,212,0.65)"   stroke="rgba(6,182,212,0.9)"   stroke-width="1.5"/>
+      </svg>
+      <div class="text-gray-600 text-xs text-center mt-2">Large bubble = strong correlation · e.g. Workload strongly correlates with Frustration</div>
+    </div>
+
+    <!-- Predictive Action Plan -->
+    <div class="glass rounded-2xl p-5 fade-up" style="animation-delay:0.56s">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="text-white font-semibold text-sm">Predictive Action Plan</div>
+          <div class="text-gray-500 text-xs">AI-recommended immediate actions for leadership</div>
+        </div>
+        <div class="w-7 h-7 rounded-lg bg-emerald-600/30 flex items-center justify-center border border-emerald-600/40">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Action 1 -->
+      <div class="action-card mb-3 p-4 rounded-xl bg-red-950/40 border border-red-700/40">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-red-400 font-black text-sm">🔴 P1</span>
+            <span class="text-red-300 font-semibold text-sm">Workload Audit</span>
+          </div>
+          <span class="text-xs bg-red-900/60 text-red-300 px-2 py-0.5 rounded-md flex-shrink-0">&lt; 2 weeks</span>
+        </div>
+        <div class="text-gray-400 text-xs leading-relaxed mb-3">Conduct immediate capacity review in Customer Support. Redistribute task load and hire 2 additional headcounts.</div>
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex gap-2">
+            <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded">Customer Support</span>
+            <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded">Finance</span>
+          </div>
+          <div class="flex items-center gap-1 text-emerald-400">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <span class="font-semibold">Impact: High</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action 2 -->
+      <div class="action-card mb-3 p-4 rounded-xl bg-amber-950/40 border border-amber-700/40">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-black text-sm">🟡 P2</span>
+            <span class="text-amber-300 font-semibold text-sm">Career Compass Program</span>
+          </div>
+          <span class="text-xs bg-amber-900/60 text-amber-300 px-2 py-0.5 rounded-md flex-shrink-0">1 month</span>
+        </div>
+        <div class="text-gray-400 text-xs leading-relaxed mb-3">Launch quarterly 1:1 career growth reviews. Define clear promotion criteria and L&D budget per employee.</div>
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex gap-2">
+            <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded">Engineering</span>
+            <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded">Sales</span>
+          </div>
+          <div class="flex items-center gap-1 text-emerald-400">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <span class="font-semibold">Impact: Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action 3 -->
+      <div class="action-card p-4 rounded-xl bg-emerald-950/40 border border-emerald-700/40">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 font-black text-sm">🟢 P3</span>
+            <span class="text-emerald-300 font-semibold text-sm">Benefits Redesign</span>
+          </div>
+          <span class="text-xs bg-emerald-900/60 text-emerald-300 px-2 py-0.5 rounded-md flex-shrink-0">3 months</span>
+        </div>
+        <div class="text-gray-400 text-xs leading-relaxed mb-3">Expand healthcare to cover family members. Add flexible work allowance and mental health support fund.</div>
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex gap-2">
+            <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded">All Departments</span>
+          </div>
+          <div class="flex items-center gap-1 text-emerald-400">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <span class="font-semibold">Impact: High</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-1.5">
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></div>
+        <span class="text-gray-600 text-xs">Generated by PulseAI · Based on pattern analysis of 847 responses</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════ FOOTER ══════════ -->
   <div class="mt-4 text-center text-gray-700 text-xs">
     PulseAI Employee Intelligence Platform · Demo v1.0 · All data is simulated for presentation purposes
   </div>
+
+  <script>
+    // Semantic search dropdown
+    const searchInput = document.getElementById('semanticSearch');
+    const searchDropdown = document.getElementById('searchDropdown');
+    searchInput.addEventListener('focus', () => searchDropdown.classList.remove('hidden'));
+    searchInput.addEventListener('blur', () => setTimeout(() => searchDropdown.classList.add('hidden'), 200));
+    document.querySelectorAll('.suggestion-pill').forEach(el => {
+      el.addEventListener('mousedown', e => { e.preventDefault(); searchInput.value = el.textContent.trim(); searchDropdown.classList.add('hidden'); });
+    });
+
+    // Verbatim filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('#verbatimList [data-tag]').forEach(item => {
+          item.style.display = (f === 'all' || item.dataset.tag === f) ? '' : 'none';
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
